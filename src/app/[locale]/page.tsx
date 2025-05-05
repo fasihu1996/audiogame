@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
@@ -12,7 +11,6 @@ const MapCircles = dynamic(() => import("@/components/MapCircles"), {
 
 export default function LandingPage() {
     const t = useTranslations("HomePage");
-    const router = useRouter();
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden bg-white">
