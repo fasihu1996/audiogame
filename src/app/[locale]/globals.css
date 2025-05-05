@@ -1,0 +1,80 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-space-sans);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+}
+
+/* Map styles */
+.leaflet-container {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.custom-map-label {
+    background: none;
+    border: none;
+    box-shadow: none;
+    font-family: cursive, serif;
+}
+
+/* Optionally add a handwriting font */
+@font-face {
+    font-family: "Handwriting";
+    src: url("https://fonts.googleapis.com/css2?family=Caveat&display=swap");
+    font-display: swap;
+}
+
+.font-handwriting {
+    font-family: "Caveat", cursive, sans-serif;
+}
+
+/* Fix pointer events for map overlays */
+.leaflet-control-container {
+    display: none;
+}
+/* Add to your existing CSS */
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .leaflet-container {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 992px) {
+    .leaflet-container {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Hide the circles on mobile */
+    .leaflet-container {
+        display: none;
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "HomePage": {
+        "viewMap": "View map",
+        "startGame": "Start game",
+        "about": "About Us"
+    },
+    "AboutPage": {
+        "aboutTitle": "About Us",
+        "whatIsTitle": "IMC Project",
+        "whatIsDescription": "Short project description",
+        "brandenburgDescription": "Description about Brandenburg",
+        "mataroDescription": "Description about Mataró",
+        "backToHome": "Back to Home"
+    },
+    "AudioChallenge": {
+        "correct!": "Correct!",
+        "welcome": "Welcome",
+        "pause": "Pause",
+        "play": "Play",
+        "wrong!": "Wrong!",
+        "hint revealed!": "Hint revealed!",
+        "hint in": "Hint in",
+        "volume": "Volume",
+        "next": "Next"
+    }
+}

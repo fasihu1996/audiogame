@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { locationData } from "@/lib/data";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 function getRandomLocation() {
     const idx = Math.floor(Math.random() * locationData.length);
@@ -18,6 +19,7 @@ export default function AudioChallenge() {
     const [timer, setTimer] = useState(30);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const audioRef = useRef<HTMLAudioElement>(null);
+    const t = useTranslations("AudioChallenge");
 
     useEffect(() => {
         if (isPlaying && blur && timer > 0) {
@@ -60,7 +62,7 @@ export default function AudioChallenge() {
 
     const handleGuess = (region: string) => {
         if (feedback) return;
-        setFeedback(region === location.region ? "Correct!" : "Wrong!");
+        setFeedback(region === location.region ? t("correct!") : t("wrong!"));
     };
 
     const handleNext = () => {
@@ -87,9 +89,9 @@ export default function AudioChallenge() {
                 <Image
                     src={location.imageUrl}
                     alt="Location"
-                    width={600}
-                    height={400}
-                    className="w-[80vw] max-w-[600px] h-[60vh] object-cover rounded-xl shadow-2xl"
+                    width={1200}
+                    height={600}
+                    className="w-[90vw] max-w-[100vw] h-[70vh] object-cover rounded-xl shadow-2xl"
                     style={{
                         filter: `blur(${blur ? 20 : 0}px)`,
                         transition: "filter 0.5s",
@@ -111,10 +113,10 @@ export default function AudioChallenge() {
                             onClick={handlePlayPause}
                             className="mr-2 px-4 py-1 rounded bg-blue-600 hover:bg-blue-700 transition disabled:opacity-50"
                         >
-                            {isPlaying ? "Pause" : "Play"}
+                            {isPlaying ? t("pause") : t("play")}
                         </button>
                         <label className="ml-2 flex items-center">
-                            Volume:
+                            {t("volume")}:
                             <input
                                 type="range"
                                 min={0}
@@ -126,7 +128,9 @@ export default function AudioChallenge() {
                             />
                         </label>
                         <span className="ml-4 font-semibold">
-                            {blur ? `Hint in: ${timer}s` : "Hint revealed!"}
+                            {blur
+                                ? `${t("hint in")} ${timer}s`
+                                : t("hint revealed!")}
                         </span>
                     </div>
                     <div className="my-2 flex">
@@ -152,7 +156,7 @@ export default function AudioChallenge() {
                                 onClick={handleNext}
                                 className="ml-6 px-4 py-1 rounded bg-yellow-500 hover:bg-yellow-600 transition"
                             >
-                                Next
+                                {t("next")}
                             </button>
                         </div>
                     )}
