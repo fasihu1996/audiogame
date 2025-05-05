@@ -1,0 +1,18 @@
+{
+    "AudioChallenge": {
+        "correct!": "Correct!",
+        "welcome": "Welcome",
+        "pause": "Pause",
+        "play": "Play",
+        "wrong!": "Wrong!",
+        "hint revealed!": "Hint revealed!",
+        "hint in": "Hint in",
+        "volume": "Volume",
+        "next": "Next"
+    },
+    "HomePage": {
+        "viewMap": "View map",
+        "startGame": "Start game",
+        "about": "About Us"
+    }
+}
