@@ -1,3 +1,9 @@
+"use client";
+
+import { useLayoutEffect, useRef } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+
 export default function MapCircles() {
     const leftMapRef = useRef<HTMLDivElement>(null);
     const rightMapRef = useRef<HTMLDivElement>(null);
