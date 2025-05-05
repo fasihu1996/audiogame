@@ -1,4 +1,17 @@
 {
+    "HomePage": {
+        "viewMap": "Mirar mapa",
+        "startGame": "Comenzar jugar",
+        "about": "Acerca de nosotros"
+    },
+    "AboutPage": {
+        "aboutTitle": "Sobre nosotras",
+        "whatIsTitle": "IMC Proyecto",
+        "whatIsDescription": "Breve descripción del proyecto",
+        "brandenburgDescription": "Descripción de Brandenburg",
+        "mataroDescription": "Descripción de Mataró",
+        "backToHome": "Volver a la página de inicio"
+    },
     "AudioChallenge": {
         "correct!": "Correcto!",
         "welcome": "Bienvenido",
@@ -9,10 +22,5 @@
         "hint in": "Indicación en",
         "volume": "Volumen",
         "next": "Próximo"
-    },
-    "HomePage": {
-        "viewMap": "Mirar mapa",
-        "startGame": "Comenzar jugar",
-        "about": "Acerca de nosotros"
     }
 }
