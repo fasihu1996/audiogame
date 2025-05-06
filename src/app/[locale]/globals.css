@@ -55,20 +55,19 @@ body {
 .leaflet-control-container {
     display: none;
 }
-/* Add to your existing CSS */
 
 /* Responsive adjustments */
-@media (max-width: 1200px) {
+@media (max-width: 2400px) {
     .leaflet-container {
-        width: 400px;
-        height: 400px;
+        width: 1200px;
+        height: 1100px;
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1000px) {
     .leaflet-container {
-        width: 300px;
-        height: 300px;
+        width: 400px;
+        height: 400px;
     }
 }
 
