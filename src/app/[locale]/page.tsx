@@ -31,7 +31,7 @@ export default function LandingPage() {
 
             {/* Center Content */}
             <div className="z-10 text-center px-16 md:px-24 lg:px-32 text-black max-w-2xl mx-auto">
-                <h1 className="text-6xl font-bold mb-2">
+                <h1 className="text-6xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text">
                     AUDIO
                     <br />
                     GUESSER
