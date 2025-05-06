@@ -57,10 +57,10 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 2400px) {
+@media (max-width: 3000px) {
     .leaflet-container {
         width: 1200px;
-        height: 1100px;
+        height: 1200px;
     }
 }
 
@@ -75,5 +75,36 @@ body {
     /* Hide the circles on mobile */
     .leaflet-container {
         display: none;
+    }
+}
+
+/* Tweak map circle placement so the center of the circle is near the edge of the viewport */
+.map-circle-left {
+    left: 0;
+    /* Move the circle further left so its center is at the edge */
+    transform: translateX(-60%) translateY(0%);
+}
+
+.map-circle-right {
+    right: 0;
+    /* Move the circle further right so its center is at the edge */
+    transform: translateX(60%) translateY(0%);
+}
+
+@media (max-width: 768px) {
+    .map-circle-left {
+        transform: translateX(-65%) translateY(-50%);
+    }
+    .map-circle-right {
+        transform: translateX(65%) translateY(-50%);
+    }
+}
+
+@media (max-width: 480px) {
+    .map-circle-left {
+        transform: translateX(-55%) translateY(-50%);
+    }
+    .map-circle-right {
+        transform: translateX(55%) translateY(-50%);
     }
 }
