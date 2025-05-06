@@ -5,7 +5,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 
 // Import map component dynamically (no SSR)
-const MapCircles = dynamic(() => import("@/components/MapCircles"), {
+const MapCircle = dynamic(() => import("@/components/MapCircle"), {
     ssr: false,
 });
 
@@ -14,11 +14,23 @@ export default function LandingPage() {
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden bg-white">
-            {/* Map Circles */}
-            <MapCircles />
+            {/* Left Map Circle */}
+            <div className="map-circle-left absolute left-0 top-1/2 -translate-y-1/2">
+                <MapCircle
+                    center={{ lat: 52.3906, lng: 13.0645 }}
+                    markerLabel="Brandenburg"
+                />
+            </div>
+            {/* Right Map Circle */}
+            <div className="map-circle-right absolute right-0 top-1/2 -translate-y-1/2">
+                <MapCircle
+                    center={{ lat: 41.5296, lng: 2.4445 }}
+                    markerLabel="Mataró"
+                />
+            </div>
 
             {/* Center Content */}
-            <div className="z-10 text-center px-4 text-black">
+            <div className="z-10 text-center px-16 md:px-24 lg:px-32 text-black max-w-2xl mx-auto">
                 <h1 className="text-6xl font-bold mb-2">
                     AUDIO
                     <br />
