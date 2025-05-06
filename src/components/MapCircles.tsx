@@ -1,110 +1,78 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import L from "leaflet";
+import { useMemo } from "react";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { divIcon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+// Fix Leaflet icons in Next.js - needs to run only once
+function fixLeafletIcons() {
+    // Only run on client side
+    if (typeof window === "undefined") return;
+
+    // Use dynamic import instead of require
+    import("leaflet").then((L) => {
+        L.Icon.Default.prototype.options.iconRetinaUrl =
+            "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png";
+        L.Icon.Default.prototype.options.iconUrl =
+            "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png";
+        L.Icon.Default.prototype.options.shadowUrl =
+            "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png";
+    });
+}
+
 export default function MapCircles() {
-    const leftMapRef = useRef<HTMLDivElement>(null);
-    const rightMapRef = useRef<HTMLDivElement>(null);
+    // Fix Leaflet icons
+    useMemo(fixLeafletIcons, []);
 
     // Center coordinates for Brandenburg and Mataro
     const brandenburgCenter = {
-        lat: 52.3906,
-        lng: 13.0645,
+        lat: 52.4106,
+        lng: 12.4545,
     };
 
     const mataroCenter = {
         lat: 41.5296,
-        lng: 2.4445,
+        lng: 2.4945,
     };
 
-    useEffect(() => {
-        // Exit early if refs aren't available yet
-        if (!leftMapRef.current || !rightMapRef.current) return;
-
-        // Required for proper loading of Leaflet icons
-        const fixLeafletIcon = () => {
-            L.Icon.Default.prototype.options.iconRetinaUrl =
-                "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png";
-            L.Icon.Default.prototype.options.iconUrl =
-                "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png";
-            L.Icon.Default.prototype.options.shadowUrl =
-                "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png";
-        };
-
-        fixLeafletIcon();
-
-        // Initialize Brandenburg map
-        const leftMap = L.map(leftMapRef.current, {
-            center: [brandenburgCenter.lat, brandenburgCenter.lng],
-            zoom: 12,
-            zoomControl: false,
-            dragging: false,
-            scrollWheelZoom: false,
-            attributionControl: false,
+    // Create custom label icon
+    const createCustomLabel = (text: string) =>
+        divIcon({
+            html: `<div style="font-family: cursive; font-size: 24px; font-weight: bold;">${text}</div>`,
+            className: "custom-map-label",
+            iconSize: [100, 40],
+            iconAnchor: [50, 20],
         });
 
-        // Initialize Mataro map
-        const rightMap = L.map(rightMapRef.current, {
-            center: [mataroCenter.lat, mataroCenter.lng],
-            zoom: 12,
-            zoomControl: false,
-            dragging: false,
-            scrollWheelZoom: false,
-            attributionControl: false,
-        });
-
-        // Add OpenStreetMap tiles
-        L.tileLayer(
-            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            {}
-        ).addTo(leftMap);
-        L.tileLayer(
-            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            {}
-        ).addTo(rightMap);
-
-        // Add city labels
-        const createCustomLabel = (text: string) => {
-            const label = L.divIcon({
-                html: `<div style="font-family: cursive; font-size: 24px; font-weight: bold;">${text}</div>`,
-                className: "custom-map-label",
-                iconSize: [100, 40],
-                iconAnchor: [50, 20],
-            });
-            return label;
-        };
-
-        L.marker([brandenburgCenter.lat, brandenburgCenter.lng], {
-            icon: createCustomLabel("Brandenburg"),
-        }).addTo(leftMap);
-
-        L.marker([mataroCenter.lat, mataroCenter.lng], {
-            icon: createCustomLabel("Mataró"),
-        }).addTo(rightMap);
-
-        // Clean up on unmount
-        return () => {
-            leftMap.remove();
-            rightMap.remove();
-        };
-    }, [
-        brandenburgCenter.lat,
-        brandenburgCenter.lng,
-        mataroCenter.lat,
-        mataroCenter.lng,
-    ]);
+    // Map options
+    const mapOptions = {
+        zoomControl: false,
+        dragging: false,
+        scrollWheelZoom: false,
+        attributionControl: false,
+        zoom: 12,
+    };
 
     return (
         <>
             {/* Left circle map (Brandenburg) */}
             <div className="absolute left-0 transform -translate-x-1/2">
                 <div className="relative">
-                    <div
-                        ref={leftMapRef}
+                    <MapContainer
+                        center={[brandenburgCenter.lat, brandenburgCenter.lng]}
+                        {...mapOptions}
                         className="rounded-full w-[500px] h-[500px] border border-gray-200 shadow-lg"
-                    />
+                    >
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        <Marker
+                            position={[
+                                brandenburgCenter.lat,
+                                brandenburgCenter.lng,
+                            ]}
+                            icon={createCustomLabel("Brandenburg")}
+                        />
+                    </MapContainer>
                     <div className="absolute top-1/4 left-0 w-full text-center pointer-events-none">
                         <p className="text-sm opacity-70 rotate-[-20deg] font-handwriting">
                             clickable
@@ -118,10 +86,17 @@ export default function MapCircles() {
             {/* Right circle map (Mataro) */}
             <div className="absolute right-0 transform translate-x-1/2">
                 <div className="relative">
-                    <div
-                        ref={rightMapRef}
+                    <MapContainer
+                        center={[mataroCenter.lat, mataroCenter.lng]}
+                        {...mapOptions}
                         className="rounded-full w-[500px] h-[500px] border border-gray-200 shadow-lg"
-                    />
+                    >
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        <Marker
+                            position={[mataroCenter.lat, mataroCenter.lng]}
+                            icon={createCustomLabel("Mataró")}
+                        />
+                    </MapContainer>
                     <div className="absolute top-1/4 right-0 w-full text-center pointer-events-none">
                         <p className="text-sm opacity-70 rotate-[20deg] font-handwriting">
                             clickable

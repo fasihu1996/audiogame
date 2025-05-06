@@ -1,4 +1,3 @@
-// filepath: src/components/LanguageSwitcher.tsx
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -25,12 +24,12 @@ export default function LanguageSwitcher() {
     };
 
     return (
-        <div className="fixed bottom-2 right-2 z-50 flex gap-1 bg-white/90 rounded-full px-4 py-1 shadow-lg">
+        <div className="fixed bottom-2 right-2 z-50 flex gap-1">
             {languages.map((lang) => (
                 <button
                     key={lang.code}
                     onClick={() => handleSwitch(lang.code)}
-                    className="w-6 h-6 rounded-full hover:scale-125 transition flex items-center justify-center"
+                    className="w-6 h-6 rounded-full hover:scale-130 transition flex items-center justify-center"
                     aria-label={`Switch to ${lang.alt}`}
                 >
                     <Image
