@@ -28,12 +28,12 @@ export default function MapCircles() {
     // Center coordinates for Brandenburg and Mataro
     const brandenburgCenter = {
         lat: 52.4106,
-        lng: 12.4545,
+        lng: 12.5245,
     };
 
     const mataroCenter = {
         lat: 41.5296,
-        lng: 2.4945,
+        lng: 2.4645,
     };
 
     // Create custom label icon
@@ -51,7 +51,7 @@ export default function MapCircles() {
         dragging: false,
         scrollWheelZoom: false,
         attributionControl: false,
-        zoom: 12,
+        zoom: 14,
     };
 
     return (
