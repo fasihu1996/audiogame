@@ -42,7 +42,9 @@ export default async function LocaleLayout({
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     {children}
                 </NextIntlClientProvider>
-                <LanguageSwitcher />
+                <div className="z-[1000]">
+                    <LanguageSwitcher />
+                </div>
             </body>
         </html>
     );
