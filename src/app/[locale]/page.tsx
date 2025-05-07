@@ -31,7 +31,7 @@ export default function LandingPage() {
 
             {/* Center Content */}
             <div className="z-10 text-center px-16 md:px-24 lg:px-32 text-black max-w-2xl mx-auto">
-                <h1 className="text-6xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 text-transparent bg-clip-text">
+                <h1 className="text-6xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-[#c73e90] to-red-600 text-transparent bg-clip-text">
                     AUDIO
                     <br />
                     GUESSER
@@ -41,7 +41,7 @@ export default function LandingPage() {
                 <div className="flex justify-center">
                     <Link
                         href="/audio-challenge"
-                        className="bg-[#7b2458] hover:bg-[#8f2b67] text-white py-2 px-8 rounded-md transition-colors"
+                        className="bg-[#c73e90] hover:bg-[#a23074] text-white py-2 px-8 rounded-md transition-colors"
                     >
                         {t("startGame")}
                     </Link>
