@@ -1,21 +1,60 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
-// Dynamically import MapCircles with SSR disabled
-const MapCircles = dynamic(
-    () => import("@/components/MapCircle").then((mod) => mod.MapCircles),
-    { ssr: false }
-);
+const FlatMap = dynamic(() => import("@/components/FlatMap"), { ssr: false });
 
 export default function LandingPage() {
     const t = useTranslations("HomePage");
+    const router = useRouter();
+
+    const brandenburgCoords = { lat: 52.4106, lon: 12.5245 };
+    const mataroCoords = { lat: 41.5396, lon: 2.4685 };
+
+    const handleMapClick = (city: string) => {
+        router.push(`/map?city=${city.toLowerCase()}`);
+    };
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden bg-white">
-            <MapCircles />
+            {/* Left circle map (Brandenburg) */}
+            <div
+                className="absolute map-circle-left cursor-pointer"
+                onClick={() => handleMapClick("brandenburg")}
+            >
+                <div className="round-container border border-gray-200 shadow-lg">
+                    <div className="map-container">
+                        <FlatMap
+                            lat={brandenburgCoords.lat}
+                            lon={brandenburgCoords.lon}
+                            zoom={14}
+                            className="w-full h-full"
+                            isFullPage={false}
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Right circle map (Mataro) */}
+            <div
+                className="absolute map-circle-right cursor-pointer"
+                onClick={() => handleMapClick("mataro")}
+            >
+                <div className="round-container border border-gray-200 shadow-lg">
+                    <div className="map-container">
+                        <FlatMap
+                            lat={mataroCoords.lat}
+                            lon={mataroCoords.lon}
+                            zoom={14}
+                            className="w-full h-full"
+                            isFullPage={false}
+                        />
+                    </div>
+                </div>
+            </div>
 
             {/* Center Content */}
             <div className="z-10 text-center px-16 md:px-24 lg:px-32 text-black max-w-2xl mx-auto">
