@@ -68,6 +68,7 @@ export default function MapCircle({
         </div>
     );
 }
+// ...existing code...
 
 export function MapCircles() {
     // Center coordinates for Brandenburg and Mataro
@@ -84,11 +85,11 @@ export function MapCircles() {
     return (
         <>
             {/* Left circle map (Brandenburg) */}
-            <div className="absolute left-0 transform -translate-x-1/2">
+            <div className="absolute map-circle-left">
                 <MapCircle
                     center={brandenburgCenter}
                     markerLabel="Brandenburg"
-                    className="w-[500px] h-[500px]"
+                    className="leaflet-round-container"
                 />
                 <div className="absolute top-1/4 left-0 w-full text-center pointer-events-none">
                     <p className="text-sm opacity-70 rotate-[-20deg] font-handwriting">
@@ -100,11 +101,11 @@ export function MapCircles() {
             </div>
 
             {/* Right circle map (Mataro) */}
-            <div className="absolute right-0 transform translate-x-1/2">
+            <div className="absolute map-circle-right">
                 <MapCircle
                     center={mataroCenter}
                     markerLabel="Mataró"
-                    className="w-[1000px] h-[1000px]"
+                    className="leaflet-round-container"
                 />
                 <div className="absolute top-1/4 right-0 w-full text-center pointer-events-none">
                     <p className="text-sm opacity-70 rotate-[20deg] font-handwriting">

@@ -29,13 +29,13 @@ export default function LanguageSwitcher() {
                 <button
                     key={lang.code}
                     onClick={() => handleSwitch(lang.code)}
-                    className="w-6 h-6 rounded-full hover:scale-130 transition flex items-center justify-center"
+                    className="w-9 h-9 rounded-full hover:scale-120 transition flex items-center justify-center"
                     aria-label={`Switch to ${lang.alt}`}
                 >
                     <Image
                         src={lang.src}
                         alt={lang.alt}
-                        className="w-8 h-8 object-contain"
+                        className="w-12 h-12 object-contain"
                         width={36}
                         height={36}
                     />
