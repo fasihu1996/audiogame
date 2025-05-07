@@ -22,5 +22,9 @@
         "hint in": "Indicación en",
         "volume": "Volumen",
         "next": "Próximo"
+    },
+    "MapPage": {
+        "backToHome": "Returnar",
+        "switchTo": "En "
     }
 }

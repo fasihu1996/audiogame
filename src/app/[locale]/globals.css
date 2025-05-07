@@ -1,15 +1,10 @@
 @import "tailwindcss";
-@import "leaflet/dist/leaflet.css";
 
 :root {
     --background: #ffffff;
     --foreground: #171717;
-}
-
-@theme inline {
-    --color-background: var(--background);
-    --color-foreground: var(--foreground);
-    --font-sans: var(--font-space-sans);
+    --btn-primary: #7b2458;
+    --btn-primary-hover: #8f2b67;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,107 +14,61 @@
     }
 }
 
+/* Base styles */
 body {
     background: var(--background);
     color: var(--foreground);
 }
 
+.btn-primary {
+    @apply bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)] text-white transition-colors;
+}
+
 /* Map styles */
-.leaflet-round-container {
-    height: 100%;
-    width: 100%;
+.round-container {
+    width: 500px;
+    height: 500px;
     border-radius: 50%;
     overflow: hidden;
     cursor: pointer;
+    position: relative;
 }
 
-.leaflet-map-container {
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    cursor: pointer;
+/* Map circle positioning */
+.map-circle-left {
+    left: 0;
+    transform: translateX(-60%);
 }
 
-.custom-map-label {
-    background: none;
-    border: none;
-    box-shadow: none;
-    font-family: cursive, serif;
+.map-circle-right {
+    right: 0;
+    transform: translateX(60%);
 }
 
-/* Optionally add a handwriting font */
-@font-face {
-    font-family: "Handwriting";
-    src: url("https://fonts.googleapis.com/css2?family=Caveat&display=swap");
-    font-display: swap;
-}
-
-.font-handwriting {
-    font-family: "Caveat", cursive, sans-serif;
-}
-
-/* Fix pointer events for map overlays */
-.leaflet-control-container {
-    display: none;
-}
-
-/* Responsive adjustments */
-@media (max-width: 3000px) {
-    .leaflet-round-container {
-        width: 1200px;
-        height: 1200px;
+@media (max-width: 590px) {
+    .round-container {
+        display: none;
     }
 }
 
-/* Responsive adjustments */
-@media (max-width: 3000px) {
-    .leaflet-container {
-        width: 100%;
-        height: 100%;
-    }
-}
-
-@media (max-width: 1000px) {
-    .leaflet-round-container {
+/* Responsive styles - Order from smallest to largest breakpoint */
+@media (max-width: 768px) {
+    .round-container {
         width: 400px;
         height: 400px;
     }
 }
 
-@media (max-width: 768px) {
-    /* Hide the circles on mobile */
-    .leaflet-round-container {
-        display: none;
+@media (min-width: 1024px) {
+    .round-container {
+        width: 900px;
+        height: 900px;
     }
 }
 
-/* Tweak map circle placement so the center of the circle is near the edge of the viewport */
-.map-circle-left {
-    left: 0;
-    /* Move the circle further left so its center is at the edge */
-    transform: translateX(-60%) translateY(0%);
-}
-
-.map-circle-right {
-    right: 0;
-    /* Move the circle further right so its center is at the edge */
-    transform: translateX(60%) translateY(0%);
-}
-
-@media (max-width: 768px) {
-    .map-circle-left {
-        transform: translateX(-65%) translateY(-50%);
-    }
-    .map-circle-right {
-        transform: translateX(65%) translateY(-50%);
-    }
-}
-
-@media (max-width: 480px) {
-    .map-circle-left {
-        transform: translateX(-55%) translateY(-50%);
-    }
-    .map-circle-right {
-        transform: translateX(55%) translateY(-50%);
+@media (min-width: 1500px) {
+    .round-container {
+        width: 1500px;
+        height: 1500px;
     }
 }

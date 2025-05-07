@@ -22,5 +22,9 @@
         "hint in": "Hint in",
         "volume": "Volume",
         "next": "Next"
+    },
+    "MapPage": {
+        "backToHome": "Back To Home",
+        "switchTo": "Switch to "
     }
 }
