@@ -1,9 +1,22 @@
-import { useEffect, useRef } from "react";
-import Map from "ol/Map.js";
-import View from "ol/View.js";
-import OSM from "ol/source/OSM.js";
-import TileLayer from "ol/layer/Tile.js";
-import { fromLonLat } from "ol/proj.js";
+import { useEffect, useRef, useState } from "react";
+import Map from "ol/Map";
+import View from "ol/View";
+import OSM from "ol/source/OSM";
+import TileLayer from "ol/layer/Tile";
+import VectorLayer from "ol/layer/Vector";
+import VectorSource from "ol/source/Vector";
+import Overlay from "ol/Overlay";
+import { fromLonLat } from "ol/proj";
+import { locationData } from "@/lib/data";
+import { createAudioMarker } from "./AudioMarker";
+import { AudioPopup } from "./AudioPopup";
+import { useRouter } from "@/i18n/navigation";
+
+interface SelectedFeature {
+    name: string;
+    audioUrl: string;
+    coordinates: number[];
+}
 
 interface FlatMapProps {
     lat: number;
@@ -11,6 +24,7 @@ interface FlatMapProps {
     zoom?: number;
     className?: string;
     isFullPage?: boolean;
+    currentRegion?: string;
 }
 
 function FlatMap({
@@ -19,15 +33,59 @@ function FlatMap({
     zoom = 12,
     className = "",
     isFullPage = false,
+    currentRegion,
 }: FlatMapProps) {
     const mapRef = useRef<HTMLDivElement>(null);
+    const popupRef = useRef<HTMLDivElement>(null);
+    const mapInstance = useRef<Map | null>(null);
+    const [selectedFeature, setSelectedFeature] =
+        useState<SelectedFeature | null>(null);
+    const overlayRef = useRef<Overlay | null>(null);
+
+    // Cleanup function
+    const cleanup = () => {
+        if (mapInstance.current) {
+            mapInstance.current.setTarget(undefined);
+        }
+        if (overlayRef.current) {
+            overlayRef.current.setPosition(undefined);
+        }
+        setSelectedFeature(null);
+    };
 
     useEffect(() => {
-        if (!mapRef.current) return;
+        if (!mapRef.current || !popupRef.current) return;
 
-        const map = new Map({
+        // Create popup overlay
+        overlayRef.current = new Overlay({
+            element: popupRef.current,
+            positioning: "bottom-center",
+            stopEvent: false,
+            offset: [0, -10],
+        });
+
+        const vectorSource = new VectorSource();
+        const vectorLayer = new VectorLayer({
+            source: vectorSource,
+        });
+
+        // Add markers for the current region
+        if (isFullPage) {
+            locationData.forEach((location) => {
+                const marker = createAudioMarker({
+                    id: location.id,
+                    lat: location.coordinates.lat,
+                    lng: location.coordinates.lng,
+                    name: location.name,
+                    audioUrl: location.audioUrl,
+                });
+                vectorSource.addFeature(marker);
+            });
+        }
+
+        mapInstance.current = new Map({
             target: mapRef.current,
-            layers: [new TileLayer({ source: new OSM() })],
+            layers: [new TileLayer({ source: new OSM() }), vectorLayer],
             view: new View({
                 center: fromLonLat([lon, lat]),
                 zoom,
@@ -35,28 +93,61 @@ function FlatMap({
                 enableRotation: isFullPage,
             }),
             controls: [],
+            overlays: [overlayRef.current],
             interactions: isFullPage ? undefined : [],
         });
 
-        // Force a map resize after initialization
+        // In FlatMap.tsx, modify the click handler:
+        const router = useRouter();
+
+        mapInstance.current.on("click", (event) => {
+            const feature = mapInstance.current?.forEachFeatureAtPixel(
+                event.pixel,
+                (feature) => feature
+            );
+
+            if (feature) {
+                const id = feature.get("id");
+                const audioUrl = feature.get("audioUrl");
+                router.push(`/location?id=${id}&audio=${audioUrl}`);
+            }
+        });
+
+        // Force map resize after initialization
         setTimeout(() => {
-            map.updateSize();
+            mapInstance.current?.updateSize();
         }, 100);
 
-        return () => {
-            map.setTarget(undefined);
-        };
-    }, [lat, lon, zoom, isFullPage]);
+        return cleanup;
+    }, [lat, lon, zoom, isFullPage, currentRegion]);
 
     return (
-        <div
-            ref={mapRef}
-            className={`w-full ${isFullPage ? "h-screen" : ""} ${className}`}
-            style={{
-                ...(isFullPage ? { minHeight: "100vh" } : { height: "100%" }),
-                aspectRatio: isFullPage ? "auto" : "1",
-            }}
-        />
+        <>
+            <div
+                ref={mapRef}
+                className={`w-full ${
+                    isFullPage ? "h-screen" : ""
+                } ${className}`}
+                style={{
+                    ...(isFullPage
+                        ? { minHeight: "100vh" }
+                        : { height: "100%" }),
+                    aspectRatio: isFullPage ? "auto" : "1",
+                }}
+            />
+            <div ref={popupRef} className="absolute z-50">
+                {selectedFeature && (
+                    <AudioPopup
+                        name={selectedFeature.name}
+                        audioUrl={selectedFeature.audioUrl}
+                        onClose={() => {
+                            setSelectedFeature(null);
+                            overlayRef.current?.setPosition(undefined);
+                        }}
+                    />
+                )}
+            </div>
+        </>
     );
 }
 

@@ -16,7 +16,8 @@
     "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-leaflet": "^5.0.0"
+    "react-leaflet": "^5.0.0",
+    "react-player": "^2.16.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
