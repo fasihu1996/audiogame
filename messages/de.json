@@ -26,5 +26,11 @@
     "MapPage": {
         "backToHome": "Zurück zur Startseite",
         "switchTo": "Zu "
+    },
+    "LocationPage": {
+        "play": "Abspielen",
+        "pause": "Anhalten",
+        "volume": "Lautstärke",
+        "backToMap": "Zurück zur Karte"
     }
 }
