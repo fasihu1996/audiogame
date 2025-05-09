@@ -4,15 +4,13 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { BRANDENBURG_COORDS, MATARO_COORDS } from "@/lib/coords";
 
 const FlatMap = dynamic(() => import("@/components/FlatMap"), { ssr: false });
 
 export default function LandingPage() {
     const t = useTranslations("HomePage");
     const router = useRouter();
-
-    const brandenburgCoords = { lat: 52.4106, lon: 12.5245 };
-    const mataroCoords = { lat: 41.5396, lon: 2.4685 };
 
     const handleMapClick = (city: string) => {
         router.push(`/map?city=${city.toLowerCase()}`);
@@ -23,13 +21,13 @@ export default function LandingPage() {
             {/* Left circle map (Brandenburg) */}
             <div
                 className="absolute map-circle-left cursor-pointer"
-                onClick={() => handleMapClick("brandenburg")}
+                onClick={() => handleMapClick("mataro")}
             >
                 <div className="round-container border border-gray-200 shadow-lg">
                     <div className="map-container">
                         <FlatMap
-                            lat={brandenburgCoords.lat}
-                            lon={brandenburgCoords.lon}
+                            lat={BRANDENBURG_COORDS.lat}
+                            lon={BRANDENBURG_COORDS.lon}
                             zoom={14}
                             className="w-full h-full"
                             isFullPage={false}
@@ -46,8 +44,8 @@ export default function LandingPage() {
                 <div className="round-container border border-gray-200 shadow-lg">
                     <div className="map-container">
                         <FlatMap
-                            lat={mataroCoords.lat}
-                            lon={mataroCoords.lon}
+                            lat={MATARO_COORDS.lat}
+                            lon={MATARO_COORDS.lon}
                             zoom={14}
                             className="w-full h-full"
                             isFullPage={false}
