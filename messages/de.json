@@ -21,7 +21,11 @@
         "hint revealed!": "Hinweis aufgedeckt!",
         "hint in": "Hinweis in",
         "volume": "Lautstärke",
-        "next": "Weiter"
+        "next": "Weiter",
+        "chooseMode": "Wähle den Modus",
+        "lives": "Leben",
+        "rounds": "Runden",
+        "timer": "Zeit"
     },
     "MapPage": {
         "backToHome": "Zurück zur Startseite",
@@ -32,5 +36,11 @@
         "pause": "Anhalten",
         "volume": "Lautstärke",
         "backToMap": "Zurück zur Karte"
+    },
+    "GameMenu": {
+        "chooseMode": "CHOOSE GAME MODE",
+        "lives": "Lives",
+        "rounds": "Rounds",
+        "timer": "Timer"
     }
 }

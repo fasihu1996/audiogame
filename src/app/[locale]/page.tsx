@@ -68,7 +68,7 @@ export default function LandingPage() {
                 <div className="flex justify-center">
                     <Link
                         href="/audio-challenge"
-                        className="bg-[#c73e90] hover:bg-[#a23074] text-white py-2 px-8 rounded-md transition-colors"
+                        className="btn-primary py-2 px-8 transition-colors"
                     >
                         {t("startGame")}
                     </Link>
