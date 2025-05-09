@@ -21,7 +21,11 @@
         "hint revealed!": "Indicación revelado!",
         "hint in": "Indicación en",
         "volume": "Volumen",
-        "next": "Próximo"
+        "next": "Próximo",
+        "chooseMode": "CHOOSE GAME MODE",
+        "lives": "Lives",
+        "rounds": "Rounds",
+        "timer": "Timer"
     },
     "MapPage": {
         "backToHome": "Returnar",
@@ -32,5 +36,11 @@
         "pause": "Pausa",
         "volume": "Volumen",
         "backToMap": "Vuelta a mapa"
+    },
+    "GameMenu": {
+        "chooseMode": "CHOOSE GAME MODE",
+        "lives": "Lives",
+        "rounds": "Rounds",
+        "timer": "Timer"
     }
 }

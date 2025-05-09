@@ -37,7 +37,7 @@ function MapPage() {
                 {/* Home button */}
                 <Link
                     href="/"
-                    className="bg-white hover:bg-gray-100 text-[#171717] py-2 px-4 rounded-md shadow-md transition-colors font-sans"
+                    className="bg-white text-[#c73e90] rounded-full py-2 px-4  shadow-md transition-colors font-sans"
                 >
                     ← {t("backToHome")}
                 </Link>
@@ -45,7 +45,7 @@ function MapPage() {
                 {/* Toggle city button */}
                 <button
                     onClick={toggleCity}
-                    className="btn-primary py-2 px-4 rounded-md shadow-md transition-colors font-sans"
+                    className="btn-primary py-2 px-4 shadow-md transition-colors font-sans"
                 >
                     {t("switchTo")}{" "}
                     {city.name === "Brandenburg" ? "Mataró" : "Brandenburg"}

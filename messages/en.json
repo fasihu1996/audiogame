@@ -10,7 +10,11 @@
         "whatIsDescription": "Short project description",
         "brandenburgDescription": "Description about Brandenburg",
         "mataroDescription": "Description about Mataró",
-        "backToHome": "Back to Home"
+        "backToHome": "Back to Home",
+        "chooseMode": "CHOOSE GAME MODE",
+        "lives": "Lives",
+        "rounds": "Rounds",
+        "timer": "Timer"
     },
     "AudioChallenge": {
         "correct!": "Correct!",
@@ -32,5 +36,11 @@
         "pause": "Pause",
         "volume": "Volume",
         "backToMap": "Back to Map"
+    },
+    "GameMenu": {
+        "chooseMode": "CHOOSE GAME MODE",
+        "lives": "Lives",
+        "rounds": "Rounds",
+        "timer": "Timer"
     }
 }

@@ -3,8 +3,8 @@
 :root {
     --background: #ffffff;
     --foreground: #171717;
-    --btn-primary: #7b2458;
-    --btn-primary-hover: #8f2b67;
+    --btn-primary: #c73e90;
+    --btn-primary-hover: #a23074;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,7 +21,7 @@ body {
 }
 
 .btn-primary {
-    @apply bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)] text-white transition-colors;
+    @apply bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)] text-white transition-colors rounded-full;
 }
 
 /* Map styles */
