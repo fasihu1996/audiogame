@@ -26,5 +26,11 @@
     "MapPage": {
         "backToHome": "Returnar",
         "switchTo": "En "
+    },
+    "LocationPage": {
+        "play": "Incicar",
+        "pause": "Pausa",
+        "volume": "Volumen",
+        "backToMap": "Vuelta a mapa"
     }
 }

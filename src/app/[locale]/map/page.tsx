@@ -29,6 +29,7 @@ function MapPage() {
                 lon={city.lon}
                 zoom={16}
                 isFullPage={true}
+                currentRegion={city.name}
             />
 
             {/* Navigation buttons container */}

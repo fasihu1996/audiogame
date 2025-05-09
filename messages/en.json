@@ -26,5 +26,11 @@
     "MapPage": {
         "backToHome": "Back To Home",
         "switchTo": "Switch to "
+    },
+    "LocationPage": {
+        "play": "Play",
+        "pause": "Pause",
+        "volume": "Volume",
+        "backToMap": "Back to Map"
     }
 }
