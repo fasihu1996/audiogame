@@ -53,6 +53,7 @@ function FlatMap({
         setSelectedFeature(null);
     };
 
+    const router = useRouter();
     useEffect(() => {
         if (!mapRef.current || !popupRef.current) return;
 
@@ -98,7 +99,7 @@ function FlatMap({
         });
 
         // In FlatMap.tsx, modify the click handler:
-        const router = useRouter();
+        //const router = useRouter();
 
         mapInstance.current.on("click", (event) => {
             const feature = mapInstance.current?.forEachFeatureAtPixel(
@@ -119,7 +120,7 @@ function FlatMap({
         }, 100);
 
         return cleanup;
-    }, [lat, lon, zoom, isFullPage, currentRegion]);
+    }, [lat, lon, zoom, isFullPage, currentRegion, router]);
 
     return (
         <>
