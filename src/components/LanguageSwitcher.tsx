@@ -2,11 +2,13 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import React from "react";
 
 const languages = [
-    { code: "en", src: "/flags/en.svg", alt: "English" },
-    { code: "de", src: "/flags/de.svg", alt: "Deutsch" },
-    { code: "es", src: "/flags/es.svg", alt: "Español" },
+    { code: "en", src: "/flags/en-round.svg", alt: "English" },
+    { code: "de", src: "/flags/de-round.svg", alt: "Deutsch" },
+    { code: "es", src: "/flags/es-round.svg", alt: "Español" },
+    { code: "ct", src: "/flags/ct-round.svg", alt: "Catalan" },
 ];
 
 export default function LanguageSwitcher() {
@@ -35,7 +37,7 @@ export default function LanguageSwitcher() {
                     <Image
                         src={lang.src}
                         alt={lang.alt}
-                        className="w-12 h-12 object-contain"
+                        className="object-cover rounded-full aspect-square"
                         width={36}
                         height={36}
                     />

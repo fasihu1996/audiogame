@@ -1,0 +1,46 @@
+{
+    "HomePage": {
+        "viewMap": "Catalan view map",
+        "startGame": "Start game cat",
+        "about": "About Us cat"
+    },
+    "AboutPage": {
+        "aboutTitle": "About Us cat",
+        "whatIsTitle": "IMC Project cat",
+        "whatIsDescription": "Short project description cat",
+        "brandenburgDescription": "Description about Brandenburg cat",
+        "mataroDescription": "Description about Mataró cat",
+        "backToHome": "Back to Home cat",
+        "chooseMode": "CHOOSE GAME MODE cat",
+        "lives": "Lives cat",
+        "rounds": "Rounds cat",
+        "timer": "Timer cat"
+    },
+    "AudioChallenge": {
+        "correct!": "Correct! cat",
+        "welcome": "Welcome cat",
+        "pause": "Pause cat",
+        "play": "Play cat",
+        "wrong!": "Wrong! cat",
+        "hint revealed!": "Hint revealed! cat",
+        "hint in": "Hint in cat",
+        "volume": "Volume cat",
+        "next": "Next cat"
+    },
+    "MapPage": {
+        "backToHome": "Back To Home cat",
+        "switchTo": "Switch to "
+    },
+    "LocationPage": {
+        "play": "Play cat",
+        "pause": "Pause cat",
+        "volume": "Volume cat",
+        "backToMap": "Back to Map cat"
+    },
+    "GameMenu": {
+        "chooseMode": "CHOOSE GAME MODE cat",
+        "lives": "Lives cat",
+        "rounds": "Rounds cat",
+        "timer": "Timer cat"
+    }
+}
