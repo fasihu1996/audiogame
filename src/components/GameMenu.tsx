@@ -6,9 +6,9 @@ export default function GameMenu() {
     const router = useRouter();
 
     return (
-        <div className="relative z-10 text-center">
-            <div className="text-center bg-black/80 backdrop-blur-sm p-12 rounded-2xl">
-                <h1 className="text-8xl font-bold mb-12 text-white">
+        <div className="relative z-10 text-center w-[400px] h-[400px]">
+            <div className="text-center backdrop-blur-sm p-12 rounded-full text-2xl">
+                <h1 className="font-bold mb-12 mt-5 text-black">
                     {t("chooseMode")}
                 </h1>
 
@@ -22,14 +22,14 @@ export default function GameMenu() {
 
                     <button
                         onClick={() => router.push("/audio-challenge/rounds")}
-                        className="w-48 bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-md shadow-md transition-colors mx-auto"
+                        className="w-48 btn-primary py-3 px-8 rounded-md shadow-md transition-colors mx-auto"
                     >
                         {t("rounds")}
                     </button>
 
                     <button
                         onClick={() => router.push("/audio-challenge/timer")}
-                        className="w-48 bg-green-600 hover:bg-green-700 text-white py-3 px-8 shadow-md transition-colors mx-auto"
+                        className="w-48 btn-primary py-3 px-8 shadow-md transition-colors mx-auto"
                     >
                         {t("timer")}
                     </button>
