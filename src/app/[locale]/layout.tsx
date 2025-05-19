@@ -5,6 +5,7 @@ import { routing } from "@/i18n/routing";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const spaceGroteskSans = Space_Grotesk({
     variable: "--font-space-sans",
@@ -42,6 +43,7 @@ export default async function LocaleLayout({
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     {children}
                 </NextIntlClientProvider>
+                <SpeedInsights />
                 <div className="z-[1000]">
                     <LanguageSwitcher />
                 </div>
