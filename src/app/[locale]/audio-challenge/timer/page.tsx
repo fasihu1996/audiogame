@@ -56,6 +56,7 @@ export default function TimerPage() {
             <div className="fixed top-0 left-0 w-full flex justify-center z-20 py-4 text-black">
                 {started && expiry && (
                     <GameTimer
+                        key={expiry?.getTime()}
                         expiryTimestamp={expiry}
                         onExpire={handleExpire}
                     />
