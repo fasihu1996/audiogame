@@ -7,6 +7,7 @@ interface AudioChallengeCoreProps {
     isDisabled?: boolean;
     feedback?: string | null;
     onNext?: () => void;
+    onFirstPlay?: () => void;
 }
 
 export default function AudioChallengeCore({
@@ -15,13 +16,21 @@ export default function AudioChallengeCore({
     isDisabled,
     feedback,
     onNext,
+    onFirstPlay,
 }: AudioChallengeCoreProps) {
     const [isPlaying, setIsPlaying] = useState(false);
+    const [hasPlayed, setHasPlayed] = useState(false);
     const wavesurferRef = useRef<{ playPause: () => void } | null>(null);
 
     const handlePlayPause = () => {
         if (wavesurferRef.current) {
             wavesurferRef.current.playPause();
+            if (!hasPlayed) {
+                setHasPlayed(true);
+                if (onFirstPlay) {
+                    onFirstPlay();
+                }
+            }
         }
     };
 
