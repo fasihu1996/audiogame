@@ -7,7 +7,7 @@ export default function GameMenu() {
 
     return (
         <div className="relative z-10 text-center w-[400px] h-[400px]">
-            <div className="text-center backdrop-blur-sm p-12 rounded-full text-2xl">
+            <div className="text-center backdrop-blur-sm p-12 rounded-full text-1xl">
                 <h1 className="font-bold mb-12 mt-5 text-black">
                     {t("chooseMode")}
                 </h1>

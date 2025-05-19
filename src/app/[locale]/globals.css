@@ -24,6 +24,10 @@ body {
     @apply bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)] text-white transition-colors rounded-full;
 }
 
+.btn-inverted {
+    @apply bg-white hover:bg-neutral-300 text-[#c73e90] rounded-full transition-colors;
+}
+
 /* Map styles */
 .round-container {
     width: 500px;
@@ -71,4 +75,24 @@ body {
         width: 1500px;
         height: 1500px;
     }
+}
+
+/* Add this to the end of your file */
+
+@keyframes float-up {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+}
+
+.animate-float-up {
+    animation: float-up 2s ease-out forwards;
 }
