@@ -7,6 +7,7 @@ import {
     forwardRef,
     useImperativeHandle,
 } from "react";
+import { useTranslations } from "next-intl";
 
 interface AudioChallengeCoreProps {
     audioUrl: string;
@@ -16,6 +17,8 @@ interface AudioChallengeCoreProps {
     onNext?: () => void;
     onFirstPlay?: () => void;
     resetOnNewAudio?: boolean;
+    gameState?: "playing" | "gameover";
+    onRestart?: () => void;
 }
 
 const AudioChallengeCore = forwardRef<
@@ -31,20 +34,21 @@ const AudioChallengeCore = forwardRef<
             onNext,
             onFirstPlay,
             resetOnNewAudio = false,
+            gameState = "playing",
+            onRestart,
         },
         ref
     ) => {
         const [isPlaying, setIsPlaying] = useState(false);
         const [hasPlayed, setHasPlayed] = useState(false);
         const wavesurferRef = useRef<WaveSurfer | null>(null);
+        const t = useTranslations("AudioChallenge");
 
         // Expose playAudio method to parent
         useImperativeHandle(ref, () => ({
             playAudio: () => {
                 if (wavesurferRef.current) {
-                    // Reset to beginning
                     wavesurferRef.current.setTime(0);
-                    // Start playing
                     wavesurferRef.current.play();
                     setIsPlaying(true);
 
@@ -77,6 +81,25 @@ const AudioChallengeCore = forwardRef<
             }
         };
 
+        // If game is over, show the game over state
+        if (gameState === "gameover") {
+            return (
+                <div className="flex flex-col items-center justify-center">
+                    <div className="text-4xl font-bold text-red-600 mt-8 text-center">
+                        {t("gameOver")}
+                    </div>
+                    {onRestart && (
+                        <button
+                            className="mt-8 px-8 py-3 btn-primary transition-colors font-bold text-lg"
+                            onClick={onRestart}
+                        >
+                            {t("restart")}
+                        </button>
+                    )}
+                </div>
+            );
+        }
+
         return (
             <div className="flex flex-col items-center justify-center">
                 <div className="w-full flex flex-col items-center">
@@ -97,38 +120,46 @@ const AudioChallengeCore = forwardRef<
                         onClick={handlePlayPause}
                         type="button"
                     >
-                        {isPlaying ? "Pause" : "Play"}
+                        {isPlaying ? t("pause") : t("play")}
                     </button>
                 </div>
-                <div className="flex justify-center gap-4 mt-6">
-                    <button
-                        className="btn-primary py-2 px-4"
-                        onClick={() => onGuess("Brandenburg")}
-                        disabled={isDisabled}
-                    >
-                        Brandenburg
-                    </button>
-                    <button
-                        className="btn-primary py-2 px-4"
-                        onClick={() => onGuess("Mataro")}
-                        disabled={isDisabled}
-                    >
-                        Mataro
-                    </button>
-                </div>
-                {feedback && (
-                    <div className="mt-6 flex flex-col items-center">
-                        <span className="font-bold text-lg">{feedback}</span>
-                        {onNext && (
+
+                {/* Fixed-height container to prevent layout shift */}
+                <div className="min-h-[120px] flex flex-col items-center justify-center">
+                    {/* Conditional rendering of buttons vs feedback */}
+                    {!feedback ? (
+                        <div className="flex justify-center gap-4 mt-6">
                             <button
-                                className="mt-4 px-6 py-2 rounded-full bg-yellow-500 text-white hover:bg-yellow-600 transition-colors"
-                                onClick={onNext}
+                                className="btn-primary py-2 px-4"
+                                onClick={() => onGuess("Brandenburg")}
+                                disabled={isDisabled}
                             >
-                                Next
+                                Brandenburg
                             </button>
-                        )}
-                    </div>
-                )}
+                            <button
+                                className="btn-primary py-2 px-4"
+                                onClick={() => onGuess("Mataro")}
+                                disabled={isDisabled}
+                            >
+                                Mataro
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="mt-6 flex flex-col items-center">
+                            <span className="font-bold text-lg">
+                                {feedback}
+                            </span>
+                            {onNext && (
+                                <button
+                                    className="mt-4 px-6 py-2 rounded-full bg-yellow-500 text-white hover:bg-yellow-600 transition-colors"
+                                    onClick={onNext}
+                                >
+                                    {t("next")}
+                                </button>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
         );
     }
