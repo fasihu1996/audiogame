@@ -21,11 +21,18 @@
         "welcome": "Welcome cat",
         "pause": "Pause cat",
         "play": "Play cat",
+        "restart": "Restart cat",
         "wrong!": "Wrong! cat",
         "hint revealed!": "Hint revealed! cat",
         "hint in": "Hint in cat",
         "volume": "Volume cat",
-        "next": "Next cat"
+        "next": "Next cat",
+        "gameOver": "Game over cat",
+        "showHint": "Show hint cat",
+        "viewHint": "View hint cat",
+        "hintReducesBonus": "Hint reduces bonus cat",
+        "loadingVideo": "Loading video cat",
+        "couldNotLoadVideo": "Could not load video cat"
     },
     "MapPage": {
         "backToHome": "Back To Home cat",
