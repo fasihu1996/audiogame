@@ -1,39 +1,41 @@
 {
-  "name": "audiogame",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@vercel/speed-insights": "^1.2.0",
-    "@wavesurfer/react": "^1.0.11",
-    "leaflet": "^1.9.4",
-    "next": "15.3.1",
-    "next-intl": "^4.1.0",
-    "ol": "^10.5.0",
-    "postcss": "^8.5.3",
-    "react": "^19.0.0",
-    "react-audio-visualizer-pro": "^0.4.1",
-    "react-dom": "^19.0.0",
-    "react-leaflet": "^5.0.0",
-    "react-player": "^2.16.0",
-    "react-timer-hook": "^4.0.5",
-    "wavesurfer.js": "^7.9.5"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4.1.5",
-    "@types/leaflet": "^1.9.17",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.3.1",
-    "tailwindcss": "^4.1.5",
-    "typescript": "^5"
-  }
+    "name": "audiogame",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "NODE_OPTIONS='--inspect' next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@aws-sdk/client-s3": "^3.812.0",
+        "@aws-sdk/s3-request-presigner": "^3.812.0",
+        "@egjs/react-view360": "^4.0.0-beta.7",
+        "@vercel/speed-insights": "^1.2.0",
+        "@wavesurfer/react": "^1.0.11",
+        "next": "15.3.1",
+        "next-intl": "^4.1.0",
+        "ol": "^10.5.0",
+        "postcss": "^8.5.3",
+        "react": "^19.0.0",
+        "react-audio-visualizer-pro": "^0.4.1",
+        "react-dom": "^19.0.0",
+        "react-leaflet": "^5.0.0",
+        "react-player": "^2.16.0",
+        "react-timer-hook": "^4.0.5",
+        "wavesurfer.js": "^7.9.5"
+    },
+    "devDependencies": {
+        "@eslint/eslintrc": "^3",
+        "@tailwindcss/postcss": "^4.1.5",
+        "@types/leaflet": "^1.9.17",
+        "@types/node": "^20",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "eslint": "^9",
+        "eslint-config-next": "15.3.1",
+        "tailwindcss": "^4.1.5",
+        "typescript": "^5"
+    }
 }
