@@ -12,6 +12,8 @@ import { locationData } from "@/lib/data";
 import { createAudioMarker } from "./AudioMarker";
 import { AudioPopup } from "./AudioPopup";
 import { useRouter } from "@/i18n/navigation";
+import { defaults as defaultInteractions } from "ol/interaction";
+import type Interaction from "ol/interaction/Interaction";
 
 interface MediaItem {
     id: number;
@@ -50,6 +52,7 @@ function FlatMap({
     const [selectedFeature, setSelectedFeature] =
         useState<SelectedFeature | null>(null);
     const overlayRef = useRef<Overlay | null>(null);
+    const originalInteractions = useRef<Interaction[]>([]);
 
     // Cleanup function
     const cleanup = () => {
@@ -130,8 +133,14 @@ function FlatMap({
             }),
             controls: [],
             overlays: [overlayRef.current],
-            interactions: isFullPage ? undefined : [],
+            interactions: isFullPage ? defaultInteractions() : [],
         });
+
+        // Store original interactions for later restoration
+        originalInteractions.current = mapInstance.current
+            .getInteractions()
+            .getArray()
+            .slice() as Interaction[];
 
         mapInstance.current.on("click", async (event) => {
             const feature = mapInstance.current?.forEachFeatureAtPixel(
@@ -168,6 +177,29 @@ function FlatMap({
 
         return cleanup;
     }, [lat, lon, zoom, isFullPage, currentRegion, router]);
+
+    // Disable interactions when popup is open, re-enable when closed
+    useEffect(() => {
+        if (!isFullPage || !mapInstance.current) return;
+        if (selectedFeature) {
+            // Remove all interactions
+            mapInstance.current.getInteractions().clear();
+        } else {
+            // Restore original interactions
+            if (originalInteractions.current) {
+                originalInteractions.current.forEach((interaction) => {
+                    if (
+                        !mapInstance
+                            .current!.getInteractions()
+                            .getArray()
+                            .includes(interaction)
+                    ) {
+                        mapInstance.current!.addInteraction(interaction);
+                    }
+                });
+            }
+        }
+    }, [selectedFeature, isFullPage]);
 
     return (
         <>
