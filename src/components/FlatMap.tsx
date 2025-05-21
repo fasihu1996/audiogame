@@ -13,15 +13,17 @@ import { createAudioMarker } from "./AudioMarker";
 import { AudioPopup } from "./AudioPopup";
 import { useRouter } from "@/i18n/navigation";
 
+interface MediaItem {
+    id: number;
+    audioS3Key: string;
+    videoS3Key?: string;
+    audioUrl?: string;
+    videoUrl?: string;
+}
+
 interface SelectedFeature {
     name: string;
-    media: Array<{
-        id: number;
-        audioS3Key: string;
-        videoS3Key?: string;
-        audioUrl?: string;
-        videoUrl?: string;
-    }>;
+    media: MediaItem[];
     coordinates: number[];
 }
 
@@ -61,6 +63,31 @@ function FlatMap({
     };
 
     const router = useRouter();
+
+    // Helper to fetch signed URLs for all media items
+    async function fetchSignedMedia(media: MediaItem[]): Promise<MediaItem[]> {
+        return Promise.all(
+            media.map(async (item) => {
+                let audioUrl = item.audioUrl;
+                if (!audioUrl && item.audioS3Key) {
+                    try {
+                        const res = await fetch("/api/s3/url", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ key: item.audioS3Key }),
+                        });
+                        const data = await res.json();
+                        audioUrl = data.url;
+                    } catch (e) {
+                        audioUrl = `/${item.audioS3Key}`;
+                        console.log(e);
+                    }
+                }
+                return { ...item, audioUrl };
+            })
+        );
+    }
+
     useEffect(() => {
         if (!mapRef.current || !popupRef.current) return;
 
@@ -106,7 +133,7 @@ function FlatMap({
             interactions: isFullPage ? undefined : [],
         });
 
-        mapInstance.current.on("click", (event) => {
+        mapInstance.current.on("click", async (event) => {
             const feature = mapInstance.current?.forEachFeatureAtPixel(
                 event.pixel,
                 (feature) => feature
@@ -118,9 +145,11 @@ function FlatMap({
                 if (geometry && geometry instanceof Point) {
                     coordinates = geometry.getCoordinates();
                 }
+                // Fetch signed URLs for all media items
+                const signedMedia = await fetchSignedMedia(media);
                 setSelectedFeature({
                     name: feature.get("name"),
-                    media, // now matches the new SelectedFeature type
+                    media: signedMedia,
                     coordinates,
                 });
             }
