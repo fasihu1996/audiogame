@@ -17,6 +17,7 @@
         "welcome": "Wilkommen",
         "pause": "Anhalten",
         "play": "Abspielen",
+        "restart": "Nochmal spielen",
         "wrong!": "Falsch!",
         "hint revealed!": "Hinweis aufgedeckt!",
         "hint in": "Hinweis in",
@@ -25,7 +26,8 @@
         "chooseMode": "Wähle den Modus",
         "lives": "Leben",
         "rounds": "Runden",
-        "timer": "Zeit"
+        "timer": "Zeit",
+        "gameOver": "Spiel vorbei!"
     },
     "MapPage": {
         "backToHome": "Zurück zur Startseite",

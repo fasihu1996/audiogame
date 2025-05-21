@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Map from "ol/Map";
 import View from "ol/View";
 import OSM from "ol/source/OSM";
+import Point from "ol/geom/Point";
 import TileLayer from "ol/layer/Tile";
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
@@ -12,9 +13,17 @@ import { createAudioMarker } from "./AudioMarker";
 import { AudioPopup } from "./AudioPopup";
 import { useRouter } from "@/i18n/navigation";
 
+interface MediaItem {
+    id: number;
+    audioS3Key: string;
+    videoS3Key?: string;
+    audioUrl?: string;
+    videoUrl?: string;
+}
+
 interface SelectedFeature {
     name: string;
-    audioUrl: string;
+    media: MediaItem[];
     coordinates: number[];
 }
 
@@ -54,6 +63,31 @@ function FlatMap({
     };
 
     const router = useRouter();
+
+    // Helper to fetch signed URLs for all media items
+    async function fetchSignedMedia(media: MediaItem[]): Promise<MediaItem[]> {
+        return Promise.all(
+            media.map(async (item) => {
+                let audioUrl = item.audioUrl;
+                if (!audioUrl && item.audioS3Key) {
+                    try {
+                        const res = await fetch("/api/s3/url", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ key: item.audioS3Key }),
+                        });
+                        const data = await res.json();
+                        audioUrl = data.url;
+                    } catch (e) {
+                        audioUrl = `/${item.audioS3Key}`;
+                        console.log(e);
+                    }
+                }
+                return { ...item, audioUrl };
+            })
+        );
+    }
+
     useEffect(() => {
         if (!mapRef.current || !popupRef.current) return;
 
@@ -78,8 +112,9 @@ function FlatMap({
                     lat: location.coordinates.lat,
                     lng: location.coordinates.lng,
                     name: location.name,
-                    audioUrl: location.audioUrl,
+                    audioUrl: location.media[0]?.audioS3Key || "",
                 });
+                marker.set("media", location.media);
                 vectorSource.addFeature(marker);
             });
         }
@@ -98,19 +133,31 @@ function FlatMap({
             interactions: isFullPage ? undefined : [],
         });
 
-        // In FlatMap.tsx, modify the click handler:
-        //const router = useRouter();
-
-        mapInstance.current.on("click", (event) => {
+        mapInstance.current.on("click", async (event) => {
             const feature = mapInstance.current?.forEachFeatureAtPixel(
                 event.pixel,
                 (feature) => feature
             );
-
             if (feature) {
-                const id = feature.get("id");
-                const audioUrl = feature.get("audioUrl");
-                router.push(`/location?id=${id}&audio=${audioUrl}`);
+                const media = feature.get("media"); // array of media items
+                const geometry = feature.getGeometry();
+                let coordinates: number[] = [];
+                if (geometry && geometry instanceof Point) {
+                    coordinates = geometry.getCoordinates();
+                }
+                // Fetch signed URLs for all media items
+                const signedMedia = await fetchSignedMedia(media);
+                setSelectedFeature({
+                    name: feature.get("name"),
+                    media: signedMedia,
+                    coordinates,
+                });
+                // Set the overlay position so the popup is visible
+                overlayRef.current?.setPosition(coordinates);
+            } else {
+                // Hide popup if clicking elsewhere
+                overlayRef.current?.setPosition(undefined);
+                setSelectedFeature(null);
             }
         });
 
@@ -140,7 +187,7 @@ function FlatMap({
                 {selectedFeature && (
                     <AudioPopup
                         name={selectedFeature.name}
-                        audioUrl={selectedFeature.audioUrl}
+                        media={selectedFeature.media}
                         onClose={() => {
                             setSelectedFeature(null);
                             overlayRef.current?.setPosition(undefined);

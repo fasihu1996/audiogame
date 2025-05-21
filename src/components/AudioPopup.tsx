@@ -1,41 +1,60 @@
 import { useState, useRef, useEffect } from "react";
 
+interface MediaItem {
+    id: number;
+    audioS3Key: string;
+    videoS3Key?: string;
+    audioUrl?: string;
+    videoUrl?: string;
+}
+
 interface AudioPopupProps {
     name: string;
-    audioUrl: string;
+    media: MediaItem[];
     onClose: () => void;
 }
 
-export function AudioPopup({ name, audioUrl, onClose }: AudioPopupProps) {
-    const [isPlaying, setIsPlaying] = useState(false);
+export function AudioPopup({ name, media, onClose }: AudioPopupProps) {
+    const [isPlaying, setIsPlaying] = useState<number | null>(null);
     const [volume, setVolume] = useState(1);
-    const audioRef = useRef<HTMLAudioElement>(null);
+    const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
 
-    const handlePlayPause = () => {
-        if (!audioRef.current) return;
+    const handlePlayPause = (idx: number) => {
+        const audio = audioRefs.current[idx];
+        if (!audio) return;
 
-        if (isPlaying) {
-            audioRef.current.pause();
+        if (isPlaying === idx) {
+            audio.pause();
+            setIsPlaying(null);
         } else {
-            audioRef.current.play();
+            // Pause any other playing audio
+            audioRefs.current.forEach((a, i) => {
+                if (a && i !== idx) a.pause();
+            });
+            audio.play();
+            setIsPlaying(idx);
         }
-        setIsPlaying(!isPlaying);
     };
 
-    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleVolumeChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        idx: number
+    ) => {
         const newVolume = parseFloat(e.target.value);
         setVolume(newVolume);
-        if (audioRef.current) {
-            audioRef.current.volume = newVolume;
+        const audio = audioRefs.current[idx];
+        if (audio) {
+            audio.volume = newVolume;
         }
     };
 
-    // Stop audio when popup closes
+    // Stop all audio when popup closes
     useEffect(() => {
+        const currentAudioRefs = audioRefs.current;
         return () => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-            }
+            currentAudioRefs.forEach((audio) => {
+                if (audio) audio.pause();
+            });
         };
     }, []);
 
@@ -64,36 +83,42 @@ export function AudioPopup({ name, audioUrl, onClose }: AudioPopupProps) {
                     </button>
                 </div>
 
-                {/* Audio Controls */}
-                <div className="space-y-4">
-                    <audio
-                        ref={audioRef}
-                        src={audioUrl}
-                        onEnded={() => setIsPlaying(false)}
-                    />
-
-                    <button
-                        onClick={handlePlayPause}
-                        className="w-full py-2.5 px-4 bg-[#7b2458] hover:bg-[#8f2b67] text-white rounded-lg transition-colors"
-                    >
-                        {isPlaying ? "Pause" : "Play"}
-                    </button>
-
-                    {/* Volume Slider */}
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
-                            Volume Control
-                        </label>
-                        <input
-                            type="range"
-                            min={0}
-                            max={1}
-                            step={0.01}
-                            value={volume}
-                            onChange={handleVolumeChange}
-                            className="w-full accent-[#7b2458]"
-                        />
-                    </div>
+                {/* Audio Controls for each media item */}
+                <div className="space-y-6">
+                    {media.map((item, idx) => (
+                        <div key={item.id} className="border-b pb-4">
+                            <div className="font-medium text-gray-800 mb-1">
+                                Audio {idx + 1}
+                            </div>
+                            <audio
+                                ref={(el) => {
+                                    audioRefs.current[idx] = el;
+                                }}
+                                src={item.audioUrl || item.audioS3Key}
+                                onEnded={() => setIsPlaying(null)}
+                            />
+                            <button
+                                className="w-full py-2.5 px-4 bg-[#7b2458] hover:bg-[#8f2b67] text-white rounded-lg transition-colors mt-2"
+                                onClick={() => handlePlayPause(idx)}
+                            >
+                                {isPlaying === idx ? "Pause" : "Play"}
+                            </button>
+                            <div className="space-y-2 mt-2">
+                                <label className="text-sm font-medium text-gray-700">
+                                    Volume Control
+                                </label>
+                                <input
+                                    type="range"
+                                    min={0}
+                                    max={1}
+                                    step={0.01}
+                                    value={volume}
+                                    onChange={(e) => handleVolumeChange(e, idx)}
+                                    className="w-full accent-[#7b2458]"
+                                />
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
