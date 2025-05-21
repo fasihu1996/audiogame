@@ -353,39 +353,39 @@ export default function TimerPage() {
                 </div>
             )}
 
-            {/* Timer at the top */}
-            <div className="w-full flex justify-center z-20 py-4 text-black absolute top-[calc(50vh-180px)]">
-                {started && expiry && gameState === "playing" && (
-                    <div className="relative">
-                        {/* Bonus animation */}
-                        {bonus && (
-                            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full">
-                                <div className="text-green-500 font-bold text-2xl animate-float-up">
-                                    +{hintUsed ? "10s" : "20s"}
-                                </div>
+            {/* Timer at the top - always visible */}
+            <div className="w-full flex justify-center z-20 py-4 text-black absolute top-[calc(50vh-240px)]">
+                <div className="relative">
+                    {/* Bonus animation */}
+                    {bonus && started && (
+                        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full">
+                            <div className="text-green-500 font-bold text-2xl animate-float-up">
+                                +{hintUsed ? "10s" : "20s"}
                             </div>
-                        )}
-
-                        {/* Timer with highlight effect */}
-                        <div
-                            className={`transition-colors duration-300 rounded-xl p-2 ${
-                                timerHighlighted ? "bg-green-100/90" : ""
-                            }`}
-                        >
-                            <GameTimer
-                                key={expiry?.getTime()}
-                                expiryTimestamp={expiry}
-                                onExpire={handleExpire}
-                                isPaused={timerPaused}
-                            />
                         </div>
+                    )}
+                    {/* Timer with highlight effect */}
+                    <div
+                        className={`transition-colors duration-300 rounded-xl p-2 ${
+                            timerHighlighted ? "bg-green-100/90" : ""
+                        }`}
+                    >
+                        <GameTimer
+                            key={expiry?.getTime() || "static"}
+                            expiryTimestamp={
+                                expiry || new Date(Date.now() + 120 * 1000)
+                            }
+                            onExpire={handleExpire}
+                            isPaused={!started || timerPaused}
+                        />
                     </div>
-                )}
+                </div>
             </div>
 
             {/* Main game content */}
             <div className="relative flex flex-col items-center justify-center min-h-screen pt-24 text-black z-10">
-                <div className="bg-white p-6 rounded-lg shadow-lg">
+                {/* Remove shadow and rounded from this container */}
+                <div className="bg-white p-0 w-full max-w-xl mx-auto">
                     <AudioChallengeCore
                         ref={audioComponentRef}
                         audioUrl={currentChallenge.mediaItem.audioUrl}
@@ -399,44 +399,47 @@ export default function TimerPage() {
                         onRestart={handleRestart}
                     />
 
-                    {/* Hint Button - Before feedback */}
-                    {gameState === "playing" &&
-                        !feedback &&
-                        started &&
-                        !showHint && (
-                            <div className="mt-6 text-center">
+                    {/* Prevent layout shift: reserve space for hint/view/next buttons */}
+                    <div className="min-h-[120px] flex flex-col items-center justify-center">
+                        {/* Hint Button - Before feedback */}
+                        {gameState === "playing" &&
+                            !feedback &&
+                            started &&
+                            !showHint && (
+                                <div className="mt-6 text-center">
+                                    <button
+                                        onClick={handleShowHint}
+                                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition-colors"
+                                        disabled={loading}
+                                    >
+                                        {showHintText} 👁️
+                                        <span className="text-xs block mt-1">
+                                            {hintReducesBonus}
+                                        </span>
+                                    </button>
+                                </div>
+                            )}
+
+                        {/* View Hint Button - After feedback */}
+                        {gameState === "playing" && feedback && !showHint && (
+                            <div className="mt-4 text-center flex justify-center space-x-4">
                                 <button
-                                    onClick={handleShowHint}
-                                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow-md transition-colors"
+                                    onClick={handleViewHintAfterFeedback}
+                                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors"
                                     disabled={loading}
                                 >
-                                    {showHintText} 👁️
-                                    <span className="text-xs block mt-1">
-                                        {hintReducesBonus}
-                                    </span>
+                                    {viewHintText} 👁️
+                                </button>
+                                <button
+                                    onClick={handleNext}
+                                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition-colors"
+                                    disabled={loading}
+                                >
+                                    {nextText} →
                                 </button>
                             </div>
                         )}
-
-                    {/* View Hint Button - After feedback */}
-                    {gameState === "playing" && feedback && !showHint && (
-                        <div className="mt-4 text-center flex justify-center space-x-4">
-                            <button
-                                onClick={handleViewHintAfterFeedback}
-                                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded shadow-md transition-colors"
-                                disabled={loading}
-                            >
-                                {viewHintText} 👁️
-                            </button>
-                            <button
-                                onClick={handleNext}
-                                className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow-md transition-colors"
-                                disabled={loading}
-                            >
-                                {nextText} →
-                            </button>
-                        </div>
-                    )}
+                    </div>
                 </div>
             </div>
 
@@ -455,7 +458,7 @@ export default function TimerPage() {
                     )}
 
                     {/* Modal Content */}
-                    <div className="relative z-10 bg-white rounded-lg shadow-xl overflow-hidden w-[90%] h-[90%] max-w-5xl">
+                    <div className="relative z-10 bg-white overflow-hidden w-[90%] h-[90%] max-w-5xl">
                         {/* Location name heading */}
                         <h2 className="absolute top-2 left-1/2 transform -translate-x-1/2 z-50 bg-black bg-opacity-50 px-4 py-2 rounded text-white font-bold">
                             {currentChallenge.location.name}
@@ -464,7 +467,7 @@ export default function TimerPage() {
                         {/* Close button */}
                         <button
                             onClick={handleCloseHint}
-                            className="absolute top-2 right-2 z-50 bg-white rounded-full p-2 text-gray-800 hover:bg-gray-100 transition-colors shadow-md"
+                            className="absolute top-2 right-2 z-50 bg-white rounded-full p-2 text-gray-800 hover:bg-gray-100 transition-colors"
                             aria-label="Close hint"
                         >
                             <svg
@@ -491,7 +494,6 @@ export default function TimerPage() {
                                     projection={projection}
                                     onReady={() => {
                                         setVideoLoading(false);
-                                        // Try to find the video element and store it
                                         const videoElement =
                                             videoContainerRef.current?.querySelector(
                                                 "video"
