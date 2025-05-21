@@ -143,6 +143,16 @@ function FlatMap({
             .slice() as Interaction[];
 
         mapInstance.current.on("click", async (event) => {
+            // Prevent closing the popup if the click is inside the popup
+            const domEvent = event.originalEvent as MouseEvent;
+            if (
+                popupRef.current &&
+                domEvent.target instanceof Node &&
+                popupRef.current.contains(domEvent.target)
+            ) {
+                return; // Click was inside the popup, do nothing
+            }
+
             const feature = mapInstance.current?.forEachFeatureAtPixel(
                 event.pixel,
                 (feature) => feature

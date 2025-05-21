@@ -59,67 +59,54 @@ export function AudioPopup({ name, media, onClose }: AudioPopupProps) {
     }, []);
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-            {/* Backdrop */}
-            <div
-                className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm"
-                onClick={onClose}
-                aria-hidden="true"
-            />
-
-            {/* Modal Content */}
-            <div className="bg-white rounded-lg p-6 shadow-xl relative z-10 w-96 mx-4">
-                {/* Header */}
-                <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-xl font-semibold text-gray-900">
-                        {name}
-                    </h3>
-                    <button
-                        onClick={onClose}
-                        className="text-gray-400 hover:text-gray-500 rounded-lg p-1.5"
-                        aria-label="Close"
-                    >
-                        <span className="text-2xl">×</span>
-                    </button>
-                </div>
-
-                {/* Audio Controls for each media item */}
-                <div className="space-y-6">
-                    {media.map((item, idx) => (
-                        <div key={item.id} className="border-b pb-4">
-                            <div className="font-medium text-gray-800 mb-1">
-                                Audio {idx + 1}
-                            </div>
-                            <audio
-                                ref={(el) => {
-                                    audioRefs.current[idx] = el;
-                                }}
-                                src={item.audioUrl || item.audioS3Key}
-                                onEnded={() => setIsPlaying(null)}
-                            />
-                            <button
-                                className="w-full py-2.5 px-4 bg-[#7b2458] hover:bg-[#8f2b67] text-white rounded-lg transition-colors mt-2"
-                                onClick={() => handlePlayPause(idx)}
-                            >
-                                {isPlaying === idx ? "Pause" : "Play"}
-                            </button>
-                            <div className="space-y-2 mt-2">
-                                <label className="text-sm font-medium text-gray-700">
-                                    Volume Control
-                                </label>
-                                <input
-                                    type="range"
-                                    min={0}
-                                    max={1}
-                                    step={0.01}
-                                    value={volume}
-                                    onChange={(e) => handleVolumeChange(e, idx)}
-                                    className="w-full accent-[#7b2458]"
-                                />
-                            </div>
+        <div className="bg-white rounded-lg p-6 shadow-xl relative z-10 w-96 mx-4">
+            {/* Header */}
+            <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-semibold text-gray-900">{name}</h3>
+                <button
+                    onClick={onClose}
+                    className="text-gray-400 hover:text-gray-500 rounded-lg p-1.5"
+                    aria-label="Close"
+                >
+                    <span className="text-2xl">×</span>
+                </button>
+            </div>
+            {/* ...rest of popup... */}
+            <div className="space-y-6">
+                {media.map((item, idx) => (
+                    <div key={item.id} className="border-b pb-4">
+                        <div className="font-medium text-gray-800 mb-1">
+                            Audio {idx + 1}
                         </div>
-                    ))}
-                </div>
+                        <audio
+                            ref={(el) => {
+                                audioRefs.current[idx] = el;
+                            }}
+                            src={item.audioUrl || item.audioS3Key}
+                            onEnded={() => setIsPlaying(null)}
+                        />
+                        <button
+                            className="w-full py-2.5 px-4 bg-[#7b2458] hover:bg-[#8f2b67] text-white rounded-lg transition-colors mt-2"
+                            onClick={() => handlePlayPause(idx)}
+                        >
+                            {isPlaying === idx ? "Pause" : "Play"}
+                        </button>
+                        <div className="space-y-2 mt-2">
+                            <label className="text-sm font-medium text-gray-700">
+                                Volume Control
+                            </label>
+                            <input
+                                type="range"
+                                min={0}
+                                max={1}
+                                step={0.01}
+                                value={volume}
+                                onChange={(e) => handleVolumeChange(e, idx)}
+                                className="w-full accent-[#7b2458]"
+                            />
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
