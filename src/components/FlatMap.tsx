@@ -152,6 +152,12 @@ function FlatMap({
                     media: signedMedia,
                     coordinates,
                 });
+                // Set the overlay position so the popup is visible
+                overlayRef.current?.setPosition(coordinates);
+            } else {
+                // Hide popup if clicking elsewhere
+                overlayRef.current?.setPosition(undefined);
+                setSelectedFeature(null);
             }
         });
 
