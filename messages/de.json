@@ -27,7 +27,12 @@
         "lives": "Leben",
         "rounds": "Runden",
         "timer": "Zeit",
-        "gameOver": "Spiel vorbei!"
+        "gameOver": "Spiel vorbei!",
+        "hintReducesBonus": "Hinweis reduziert Zeitbonus",
+        "showHint": "Hinweis anzeigen",
+        "viewHint": "Hinweis betrachten",
+        "loadingVideo": "Video wird geladen",
+        "couldNotLoadVideo": "Video konnte nicht geladen werden"
     },
     "MapPage": {
         "backToHome": "Zurück zur Startseite",
