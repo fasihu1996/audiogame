@@ -96,8 +96,8 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "brandenburg/audio/city_01.mp3",
+                videoS3Key: "brandenburg/video/city_01.mp4",
             },
         ],
     },
@@ -112,8 +112,8 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "brandenburg/audio/city_01.mp3",
+                videoS3Key: "brandenburg/video/city_01.mp4",
             },
         ],
     },
@@ -170,11 +170,14 @@ export async function getRandomLocationWithMedia(): Promise<{
             throw new Error("Failed to fetch signed URLs");
         }
 
-        const audioData = await audioResponse.json();
-        const videoData = await videoResponse.json();
+        //const audioData = await audioResponse.json();
+        //const videoData = await videoResponse.json();
 
-        mediaItem.audioUrl = audioData.url;
-        mediaItem.videoUrl = videoData.url;
+        // Update the S3 bucket policy to allow public read access
+        // Then modify getRandomLocationWithMedia() to use direct URLs:
+
+        mediaItem.audioUrl = `https://audiogame.fsn1.your-objectstorage.com/${mediaItem.audioS3Key}`;
+        mediaItem.videoUrl = `https://audiogame.fsn1.your-objectstorage.com/${mediaItem.videoS3Key}`;
     } catch (error) {
         console.error("Error generating signed URLs:", error);
         // Fallback to local paths if API fails - Fix the path here too
