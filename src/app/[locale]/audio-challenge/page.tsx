@@ -113,10 +113,12 @@ export default function TimerPage() {
                     src: videoPath,
                     video: {
                         autoplay: true,
-                        muted: false,
+                        muted: true, // Start muted (browsers often block autoplay with sound)
                         loop: true,
                     },
                 });
+
+                console.log("Created projection with source:", videoPath);
 
                 if (isMounted) {
                     setProjection(proj);
@@ -167,6 +169,13 @@ export default function TimerPage() {
 
     // Confetti function for streak milestones
     const triggerConfetti = (count: number) => {
+        // Play the celebration sound
+        const celebrationSound = new Audio("/yippee_sound.mp3");
+        celebrationSound.volume = 0.5; // Set to 50% volume
+        celebrationSound
+            .play()
+            .catch((error) => console.log("Audio playback failed:", error));
+
         confetti({
             particleCount: Math.min(150 + count * 10, 300), // More confetti for higher streaks, capped at 300
             spread: 90,
@@ -354,7 +363,7 @@ export default function TimerPage() {
             )}
 
             {/* Timer area with streak counter */}
-            <div className="w-full flex flex-col items-center z-20 py-4 text-black absolute top-[25vh]">
+            <div className="w-full flex flex-col items-center z-20 py-4 text-black absolute top-[calc(25vh)]">
                 {/* Streak counter above timer */}
                 <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-3 py-1.5 rounded-full shadow-lg mb-3">
                     <div className="flex items-center gap-1.5">
@@ -393,7 +402,7 @@ export default function TimerPage() {
             </div>
 
             {/* Main game content */}
-            <div className="relative flex flex-col items-center justify-center min-h-screen pt-[35vh] text-black z-10">
+            <div className="relative flex flex-col items-center justify-center min-h-screen pt-[10vh] text-black z-10">
                 <div className="bg-white p-0 w-full max-w-xl mx-auto">
                     <AudioChallengeCore
                         ref={audioComponentRef}
@@ -415,7 +424,7 @@ export default function TimerPage() {
                                 <div className="mt-6 text-center">
                                     <button
                                         onClick={handleShowHint}
-                                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition-colors"
+                                        className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-full transition-colors"
                                     >
                                         {showHintText} 👁️
                                         <span className="text-xs block mt-1">
@@ -495,7 +504,13 @@ export default function TimerPage() {
                                         if (videoElement) {
                                             videoElementRef.current =
                                                 videoElement;
+                                            // Unmute after user interaction
+                                            videoElement.muted = false;
                                         }
+                                        console.log(
+                                            "Projection ready, video element found:",
+                                            !!videoElement
+                                        );
                                     }}
                                     onError={(e) => {
                                         console.error("View360 error:", e);

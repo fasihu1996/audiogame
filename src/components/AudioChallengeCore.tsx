@@ -40,6 +40,7 @@ const AudioChallengeCore = forwardRef<
         const [isPlaying, setIsPlaying] = useState(false);
         const [hasPlayed, setHasPlayed] = useState(false);
         const [isReady, setIsReady] = useState(false);
+        const [isAudioLoading, setIsAudioLoading] = useState(true);
         const wavesurferRef = useRef<WaveSurfer | null>(null);
         const t = useTranslations("AudioChallenge");
 
@@ -117,23 +118,32 @@ const AudioChallengeCore = forwardRef<
         }
 
         return (
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center mt-10">
                 <div className="w-full flex flex-col items-center">
-                    <WavesurferPlayer
-                        url={audioUrl}
-                        width={600}
-                        height={60}
-                        barWidth={2}
-                        barHeight={10}
-                        onReady={(ws) => {
-                            wavesurferRef.current = ws;
-                            setIsReady(true); // Mark as ready when WaveSurfer is ready
-                        }}
-                        onPlay={() => setIsPlaying(true)}
-                        onPause={() => setIsPlaying(false)}
-                    />
+                    <>
+                        {isAudioLoading && (
+                            <div className="w-[320px] h-[60px] bg-gray-200 rounded-md animate-pulse mb-6" />
+                        )}
+                        <div className={isAudioLoading ? "hidden" : "block"}>
+                            <WavesurferPlayer
+                                url={audioUrl}
+                                width={600}
+                                height={60}
+                                barWidth={2}
+                                barHeight={10}
+                                onReady={(ws) => {
+                                    wavesurferRef.current = ws;
+                                    setIsReady(true); // Mark as ready when WaveSurfer is ready
+                                    setIsAudioLoading(false);
+                                }}
+                                onPlay={() => setIsPlaying(true)}
+                                onPause={() => setIsPlaying(false)}
+                                onLoading={() => setIsAudioLoading(true)}
+                            />
+                        </div>
+                    </>
                     <button
-                        className="mt-4 mb-2 px-6 py-2 btn-primary transition-colors"
+                        className="mt-10 mb-2 px-6 py-2 btn-primary transition-colors"
                         onClick={handlePlayPause}
                         type="button"
                     >
@@ -142,7 +152,7 @@ const AudioChallengeCore = forwardRef<
                 </div>
 
                 {/* Fixed-height container to prevent layout shift */}
-                <div className="min-h-[120px] flex flex-col items-center justify-center">
+                <div className="min-h-[120px] flex flex-col items-center justify-center mt-12">
                     {/* Conditional rendering of buttons vs feedback */}
                     {!feedback ? (
                         <div className="flex justify-center gap-4 mt-6">
