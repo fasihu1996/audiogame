@@ -133,7 +133,7 @@ const AudioChallengeCore = forwardRef<
                         onPause={() => setIsPlaying(false)}
                     />
                     <button
-                        className="mt-4 mb-2 px-6 py-2 rounded-full bg-[#7b2458] text-white hover:bg-[#8f2b67] transition-colors"
+                        className="mt-4 mb-2 px-6 py-2 btn-primary transition-colors"
                         onClick={handlePlayPause}
                         type="button"
                     >
@@ -147,14 +147,14 @@ const AudioChallengeCore = forwardRef<
                     {!feedback ? (
                         <div className="flex justify-center gap-4 mt-6">
                             <button
-                                className="btn-primary py-2 px-4"
+                                className="btn-secondary py-2 px-4"
                                 onClick={() => onGuess("Brandenburg")}
                                 disabled={isDisabled}
                             >
                                 Brandenburg
                             </button>
                             <button
-                                className="btn-primary py-2 px-4"
+                                className="btn-secondary py-2 px-4"
                                 onClick={() => onGuess("Mataro")}
                                 disabled={isDisabled}
                             >

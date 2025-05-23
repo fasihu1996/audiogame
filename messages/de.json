@@ -32,7 +32,8 @@
         "showHint": "Hinweis anzeigen",
         "viewHint": "Hinweis betrachten",
         "loadingVideo": "Video wird geladen",
-        "couldNotLoadVideo": "Video konnte nicht geladen werden"
+        "couldNotLoadVideo": "Video konnte nicht geladen werden",
+        "streak": "Streak"
     },
     "MapPage": {
         "backToHome": "Zurück zur Startseite",

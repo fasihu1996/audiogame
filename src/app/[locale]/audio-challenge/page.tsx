@@ -7,14 +7,18 @@ import { useTranslations } from "next-intl";
 import "@egjs/react-view360/css/view360.min.css";
 import type { EquirectProjection } from "@egjs/react-view360";
 import View360 from "@egjs/react-view360";
+import confetti from "canvas-confetti";
 
 export default function TimerPage() {
     const t = useTranslations("AudioChallenge");
     const [gameState, setGameState] = useState<"playing" | "gameover">(
         "playing"
     );
-    // Remove loading state
-    // const [loading, setLoading] = useState(true);
+
+    // Add streak state
+    const [streak, setStreak] = useState(0);
+    const [showStreakAnimation, setShowStreakAnimation] = useState(false);
+    const [streakMilestone, setStreakMilestone] = useState(0);
 
     interface Challenge {
         location: { name: string; region: string };
@@ -161,24 +165,75 @@ export default function TimerPage() {
 
     const handleExpire = () => setGameState("gameover");
 
+    // Confetti function for streak milestones
+    const triggerConfetti = (count: number) => {
+        confetti({
+            particleCount: Math.min(150 + count * 10, 300), // More confetti for higher streaks, capped at 300
+            spread: 90,
+            origin: { y: 0.5, x: 0.5 },
+            colors: ["#7b2458", "#ffcc00", "#ff7733", "#33aaff", "#33ff77"],
+            disableForReducedMotion: true,
+        });
+
+        // For big milestones, add a second confetti burst
+        if (count % 10 === 0) {
+            setTimeout(() => {
+                confetti({
+                    particleCount: 200,
+                    angle: 60,
+                    spread: 75,
+                    origin: { x: 0 },
+                });
+                confetti({
+                    particleCount: 200,
+                    angle: 120,
+                    spread: 75,
+                    origin: { x: 1 },
+                });
+            }, 200);
+        }
+    };
+
+    // Update handleGuess to track streak
     const handleGuess = (region: string) => {
         if (feedback) return;
         const correct = region === currentChallenge.location.region;
         setFeedback(correct ? t("correct!") : t("wrong!"));
         setTimerPaused(true);
 
-        if (correct && expiry) {
-            const bonusTime = hintUsed ? 10 : 20;
-            setBonus(true);
-            setTimerHighlighted(true);
-            setExpiry((prev) => {
-                if (!prev) return null;
-                const newTime = new Date(prev);
-                newTime.setSeconds(newTime.getSeconds() + bonusTime);
-                return newTime;
-            });
-            setTimeout(() => setBonus(false), 2000);
-            setTimeout(() => setTimerHighlighted(false), 1000);
+        if (correct) {
+            // Increment streak
+            const newStreak = streak + 1;
+            setStreak(newStreak);
+
+            // Check for streak milestones (5, 10, 15, etc.)
+            if (newStreak % 5 === 0) {
+                // Set milestone animation
+                setStreakMilestone(newStreak);
+                setShowStreakAnimation(true);
+                // Hide after animation completes
+                setTimeout(() => setShowStreakAnimation(false), 3000);
+                // Trigger confetti
+                triggerConfetti(newStreak);
+            }
+
+            // Timer bonus logic remains the same
+            if (expiry) {
+                const bonusTime = hintUsed ? 10 : 20;
+                setBonus(true);
+                setTimerHighlighted(true);
+                setExpiry((prev) => {
+                    if (!prev) return null;
+                    const newTime = new Date(prev);
+                    newTime.setSeconds(newTime.getSeconds() + bonusTime);
+                    return newTime;
+                });
+                setTimeout(() => setBonus(false), 2000);
+                setTimeout(() => setTimerHighlighted(false), 1000);
+            }
+        } else {
+            // Reset streak on wrong answer
+            setStreak(0);
         }
     };
 
@@ -230,6 +285,8 @@ export default function TimerPage() {
         setTimerPaused(false);
         setShowHint(false);
         setHintUsed(false);
+        setStreak(0); // Reset streak
+
         if (videoElementRef.current) {
             try {
                 videoElementRef.current.pause();
@@ -286,8 +343,30 @@ export default function TimerPage() {
 
     return (
         <div className="relative min-h-screen bg-white">
-            {/* Timer at the top - always visible */}
-            <div className="w-full flex justify-center z-20 py-4 text-black absolute top-[calc(50vh-240px)]">
+            {/* Streak milestone animation */}
+            {showStreakAnimation && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
+                    <div className="bg-black bg-opacity-30 text-white text-4xl font-bold rounded-lg px-10 py-6 transform scale-in animate-bounce">
+                        {streakMilestone}{" "}
+                        {t("streak", { defaultValue: "STREAK" })}! 🔥
+                    </div>
+                </div>
+            )}
+
+            {/* Timer area with streak counter */}
+            <div className="w-full flex flex-col items-center z-20 py-4 text-black absolute top-[25vh]">
+                {/* Streak counter above timer */}
+                <div className="bg-gradient-to-r from-amber-500 to-amber-600 text-white px-3 py-1.5 rounded-full shadow-lg mb-3">
+                    <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-bold">
+                            {t("streak", { defaultValue: "STREAK" })}
+                        </span>
+                        <span className="text-xl font-bold">{streak}</span>
+                        {streak > 0 && <span className="text-lg">🔥</span>}
+                    </div>
+                </div>
+
+                {/* Timer below streak */}
                 <div className="relative">
                     {bonus && started && (
                         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full">
@@ -314,7 +393,7 @@ export default function TimerPage() {
             </div>
 
             {/* Main game content */}
-            <div className="relative flex flex-col items-center justify-center min-h-screen pt-24 text-black z-10">
+            <div className="relative flex flex-col items-center justify-center min-h-screen pt-[35vh] text-black z-10">
                 <div className="bg-white p-0 w-full max-w-xl mx-auto">
                     <AudioChallengeCore
                         ref={audioComponentRef}
@@ -350,13 +429,13 @@ export default function TimerPage() {
                             <div className="mt-4 text-center flex justify-center space-x-4">
                                 <button
                                     onClick={handleViewHintAfterFeedback}
-                                    className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded transition-colors"
+                                    className="btn-inverted shadow-2xl outline-1 px-4 py-2 transition-colors"
                                 >
                                     {viewHintText} 👁️
                                 </button>
                                 <button
                                     onClick={handleNext}
-                                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded transition-colors"
+                                    className="btn-primary shadow-2xl outline-1 rounded-full px-4 py-2 transition-colors"
                                 >
                                     {nextText} →
                                 </button>
