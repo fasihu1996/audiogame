@@ -75,13 +75,13 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_01.mp3",
-                videoS3Key: "brandenburg/video/city_01.mp4",
+                audioS3Key: "brandenburg/audio/wald_07.mp3",
+                videoS3Key: "brandenburg/video/wald_07.mp4",
             },
             {
                 id: 2,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "brandenburg/audio/wald_07.mp3",
+                videoS3Key: "brandenburg/video/wald_07.mp4",
             },
         ],
     },
@@ -96,8 +96,8 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "brandenburg/audio/wald_07.mp3",
+                videoS3Key: "brandenburg/video/wald_07.mp4",
             },
         ],
     },
@@ -112,8 +112,8 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "brandenburg/audio/wald_07.mp3",
+                videoS3Key: "brandenburg/video/wald_07.mp4",
             },
         ],
     },
@@ -124,6 +124,70 @@ export const locationData: Location[] = [
         coordinates: {
             lat: 52.412245,
             lng: 12.53904,
+        },
+        media: [
+            {
+                id: 1,
+                audioS3Key: "brandenburg/audio/wald_07.mp3",
+                videoS3Key: "brandenburg/video/wald_07.mp4",
+            },
+        ],
+    },
+    {
+        id: 6,
+        name: "Beach",
+        region: "Mataro",
+        coordinates: {
+            lat: 41.526686,
+            lng: 2.436851,
+        },
+        media: [
+            {
+                id: 1,
+                audioS3Key: "brandenburg/audio/city_02.mp3",
+                videoS3Key: "brandenburg/video/city_02.mp4",
+            },
+        ],
+    },
+    {
+        id: 7,
+        name: "Forest",
+        region: "Mataro",
+        coordinates: {
+            lat: 41.58409,
+            lng: 2.43437,
+        },
+        media: [
+            {
+                id: 1,
+                audioS3Key: "brandenburg/audio/city_02.mp3",
+                videoS3Key: "brandenburg/video/city_02.mp4",
+            },
+        ],
+    },
+    {
+        id: 8,
+        name: "Mataró Parc",
+        region: "Mataro",
+        coordinates: {
+            lat: 41.554726,
+            lng: 2.433179,
+        },
+        media: [
+            {
+                id: 1,
+                audioS3Key: "brandenburg/audio/city_02.mp3",
+                videoS3Key: "brandenburg/video/city_02.mp4",
+            },
+        ],
+    },
+    {
+        id: 9,
+        name: "Tecno Campus",
+        region: "Mataro",
+        coordinates: {
+            lat: 41.527927,
+            lng: 2.434416,
         },
         media: [
             {
@@ -170,11 +234,14 @@ export async function getRandomLocationWithMedia(): Promise<{
             throw new Error("Failed to fetch signed URLs");
         }
 
-        const audioData = await audioResponse.json();
-        const videoData = await videoResponse.json();
+        //const audioData = await audioResponse.json();
+        //const videoData = await videoResponse.json();
 
-        mediaItem.audioUrl = audioData.url;
-        mediaItem.videoUrl = videoData.url;
+        // Update the S3 bucket policy to allow public read access
+        // Then modify getRandomLocationWithMedia() to use direct URLs:
+
+        mediaItem.audioUrl = `https://audiogame.fsn1.your-objectstorage.com/${mediaItem.audioS3Key}`;
+        mediaItem.videoUrl = `https://audiogame.fsn1.your-objectstorage.com/${mediaItem.videoS3Key}`;
     } catch (error) {
         console.error("Error generating signed URLs:", error);
         // Fallback to local paths if API fails - Fix the path here too

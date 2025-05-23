@@ -14,7 +14,6 @@ interface AudioChallengeCoreProps {
     onGuess: (guess: string) => void;
     isDisabled?: boolean;
     feedback?: string | null;
-    onNext?: () => void;
     onFirstPlay?: () => void;
     resetOnNewAudio?: boolean;
     gameState?: "playing" | "gameover";
@@ -31,7 +30,6 @@ const AudioChallengeCore = forwardRef<
             onGuess,
             isDisabled,
             feedback,
-            onNext,
             onFirstPlay,
             resetOnNewAudio = false,
             gameState = "playing",
@@ -41,13 +39,15 @@ const AudioChallengeCore = forwardRef<
     ) => {
         const [isPlaying, setIsPlaying] = useState(false);
         const [hasPlayed, setHasPlayed] = useState(false);
+        const [isReady, setIsReady] = useState(false);
+        const [isAudioLoading, setIsAudioLoading] = useState(true);
         const wavesurferRef = useRef<WaveSurfer | null>(null);
         const t = useTranslations("AudioChallenge");
 
         // Expose playAudio method to parent
         useImperativeHandle(ref, () => ({
             playAudio: () => {
-                if (wavesurferRef.current) {
+                if (wavesurferRef.current && isReady) {
                     wavesurferRef.current.setTime(0);
                     wavesurferRef.current.play();
                     setIsPlaying(true);
@@ -56,12 +56,29 @@ const AudioChallengeCore = forwardRef<
                         setHasPlayed(true);
                         if (onFirstPlay) onFirstPlay();
                     }
+                } else {
+                    console.log("Audio not ready yet, will retry");
+                    // Retry after a delay if audio isn't ready
+                    setTimeout(() => {
+                        if (wavesurferRef.current && isReady) {
+                            wavesurferRef.current.setTime(0);
+                            wavesurferRef.current.play();
+                            setIsPlaying(true);
+
+                            if (!hasPlayed) {
+                                setHasPlayed(true);
+                                if (onFirstPlay) onFirstPlay();
+                            }
+                        }
+                    }, 500);
                 }
             },
         }));
 
         // Reset audio when URL changes
         useEffect(() => {
+            setIsReady(false); // Mark as not ready when URL changes
+
             if (resetOnNewAudio && wavesurferRef.current) {
                 wavesurferRef.current.setTime(0);
                 setIsPlaying(false);
@@ -101,22 +118,32 @@ const AudioChallengeCore = forwardRef<
         }
 
         return (
-            <div className="flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center justify-center mt-10">
                 <div className="w-full flex flex-col items-center">
-                    <WavesurferPlayer
-                        url={audioUrl}
-                        width={600}
-                        height={60}
-                        barWidth={2}
-                        barHeight={10}
-                        onReady={(ws) => {
-                            wavesurferRef.current = ws;
-                        }}
-                        onPlay={() => setIsPlaying(true)}
-                        onPause={() => setIsPlaying(false)}
-                    />
+                    <>
+                        {isAudioLoading && (
+                            <div className="w-[320px] h-[60px] bg-gray-200 rounded-md animate-pulse mb-6" />
+                        )}
+                        <div className={isAudioLoading ? "hidden" : "block"}>
+                            <WavesurferPlayer
+                                url={audioUrl}
+                                width={600}
+                                height={60}
+                                barWidth={2}
+                                barHeight={10}
+                                onReady={(ws) => {
+                                    wavesurferRef.current = ws;
+                                    setIsReady(true); // Mark as ready when WaveSurfer is ready
+                                    setIsAudioLoading(false);
+                                }}
+                                onPlay={() => setIsPlaying(true)}
+                                onPause={() => setIsPlaying(false)}
+                                onLoading={() => setIsAudioLoading(true)}
+                            />
+                        </div>
+                    </>
                     <button
-                        className="mt-4 mb-2 px-6 py-2 rounded-full bg-[#7b2458] text-white hover:bg-[#8f2b67] transition-colors"
+                        className="mt-10 mb-2 px-6 py-2 btn-primary transition-colors"
                         onClick={handlePlayPause}
                         type="button"
                     >
@@ -125,19 +152,19 @@ const AudioChallengeCore = forwardRef<
                 </div>
 
                 {/* Fixed-height container to prevent layout shift */}
-                <div className="min-h-[120px] flex flex-col items-center justify-center">
+                <div className="min-h-[120px] flex flex-col items-center justify-center mt-12">
                     {/* Conditional rendering of buttons vs feedback */}
                     {!feedback ? (
                         <div className="flex justify-center gap-4 mt-6">
                             <button
-                                className="btn-primary py-2 px-4"
+                                className="btn-secondary py-2 px-4"
                                 onClick={() => onGuess("Brandenburg")}
                                 disabled={isDisabled}
                             >
                                 Brandenburg
                             </button>
                             <button
-                                className="btn-primary py-2 px-4"
+                                className="btn-secondary py-2 px-4"
                                 onClick={() => onGuess("Mataro")}
                                 disabled={isDisabled}
                             >
@@ -149,14 +176,6 @@ const AudioChallengeCore = forwardRef<
                             <span className="font-bold text-lg">
                                 {feedback}
                             </span>
-                            {onNext && (
-                                <button
-                                    className="mt-4 px-6 py-2 rounded-full bg-yellow-500 text-white hover:bg-yellow-600 transition-colors"
-                                    onClick={onNext}
-                                >
-                                    {t("next")}
-                                </button>
-                            )}
                         </div>
                     )}
                 </div>
