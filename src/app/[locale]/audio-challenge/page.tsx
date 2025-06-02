@@ -351,7 +351,7 @@ export default function TimerPage() {
         t("couldNotLoadVideo") || "Could not load video";
 
     return (
-        <div className="relative min-h-screen bg-white">
+        <div className="relative flex flex-col items-center min-h-screen bg-white">
             {/* Streak milestone animation */}
             {showStreakAnimation && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
@@ -403,7 +403,7 @@ export default function TimerPage() {
 
             {/* Main game content */}
             <div className="relative flex flex-col items-center justify-center min-h-screen pt-[10vh] text-black z-10">
-                <div className="bg-white p-0 w-full max-w-xl mx-auto">
+                <div className="bg-white p-0 w-full max-w-[320px] mx-auto">
                     <AudioChallengeCore
                         ref={audioComponentRef}
                         audioUrl={currentChallenge.mediaItem.audioUrl}
