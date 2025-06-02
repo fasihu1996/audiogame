@@ -497,20 +497,60 @@ export default function TimerPage() {
                                     projection={projection}
                                     onReady={() => {
                                         setVideoLoading(false);
-                                        const videoElement =
-                                            videoContainerRef.current?.querySelector(
-                                                "video"
-                                            );
-                                        if (videoElement) {
-                                            videoElementRef.current =
-                                                videoElement;
-                                            // Unmute after user interaction
-                                            videoElement.muted = false;
-                                        }
-                                        console.log(
-                                            "Projection ready, video element found:",
-                                            !!videoElement
-                                        );
+
+                                        // Try to get the video element, retry if not found (up to 20 times, 100ms apart)
+                                        const trySetVideoElement = (
+                                            attempt = 0
+                                        ) => {
+                                            const videoElement =
+                                                videoContainerRef.current?.querySelector(
+                                                    "video"
+                                                );
+                                            if (videoElement) {
+                                                // Wait for the video to have loaded metadata (dimensions)
+                                                if (
+                                                    videoElement.readyState >= 1
+                                                ) {
+                                                    videoElementRef.current =
+                                                        videoElement;
+                                                    videoElement.muted = false;
+                                                    console.log(
+                                                        "Projection ready, video element found:",
+                                                        true
+                                                    );
+                                                } else {
+                                                    // Wait for loadedmetadata event
+                                                    videoElement.addEventListener(
+                                                        "loadedmetadata",
+                                                        () => {
+                                                            videoElementRef.current =
+                                                                videoElement;
+                                                            videoElement.muted =
+                                                                false;
+                                                            console.log(
+                                                                "Projection ready, video element loadedmetadata:",
+                                                                true
+                                                            );
+                                                        },
+                                                        { once: true }
+                                                    );
+                                                }
+                                            } else if (attempt < 20) {
+                                                setTimeout(
+                                                    () =>
+                                                        trySetVideoElement(
+                                                            attempt + 1
+                                                        ),
+                                                    100
+                                                );
+                                            } else {
+                                                console.log(
+                                                    "Projection ready, video element found:",
+                                                    false
+                                                );
+                                            }
+                                        };
+                                        trySetVideoElement();
                                     }}
                                     onError={(e) => {
                                         console.error("View360 error:", e);
