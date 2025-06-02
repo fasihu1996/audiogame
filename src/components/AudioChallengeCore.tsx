@@ -127,7 +127,7 @@ const AudioChallengeCore = forwardRef<
                         <div className={isAudioLoading ? "hidden" : "block"}>
                             <WavesurferPlayer
                                 url={audioUrl}
-                                width={600}
+                                width={300}
                                 height={60}
                                 barWidth={2}
                                 barHeight={10}

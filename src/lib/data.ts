@@ -34,33 +34,28 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/wald_07.mp3",
-                videoS3Key: "brandenburg/video/wald_07.mp4",
+                audioS3Key: "brandenburg/audio/forest_01.mp3",
+                videoS3Key: "brandenburg/video/forest_01.mp4",
             },
             {
                 id: 2,
-                audioS3Key: "brandenburg/audio/wald_08.mp3",
-                videoS3Key: "brandenburg/video/wald_08.mp4",
+                audioS3Key: "brandenburg/audio/forest_02.mp3",
+                videoS3Key: "brandenburg/video/forest_01.mp4",
             },
             {
                 id: 3,
-                audioS3Key: "brandenburg/audio/wald_09.mp3",
-                videoS3Key: "brandenburg/video/wald_09.mp4",
+                audioS3Key: "brandenburg/audio/forest_03.mp3",
+                videoS3Key: "brandenburg/video/forest_03.mp4",
             },
             {
                 id: 4,
-                audioS3Key: "brandenburg/audio/wald_10.mp3",
-                videoS3Key: "brandenburg/video/wald_10.mp4",
+                audioS3Key: "brandenburg/audio/forest_04.mp3",
+                videoS3Key: "brandenburg/video/forest_04.mp4",
             },
             {
                 id: 5,
-                audioS3Key: "brandenburg/audio/wald_11.mp3",
-                videoS3Key: "brandenburg/video/wald_11.mp4",
-            },
-            {
-                id: 6,
-                audioS3Key: "brandenburg/audio/wald_12.mp3",
-                videoS3Key: "brandenburg/video/wald_12.mp4",
+                audioS3Key: "brandenburg/audio/forest_05.mp3",
+                videoS3Key: "brandenburg/video/forest_05.mp4",
             },
         ],
     },
@@ -75,13 +70,28 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/wald_07.mp3",
-                videoS3Key: "brandenburg/video/wald_07.mp4",
+                audioS3Key: "brandenburg/audio/mall_01.aac",
+                videoS3Key: "brandenburg/video/mall_01.mp4",
             },
             {
                 id: 2,
-                audioS3Key: "brandenburg/audio/wald_07.mp3",
-                videoS3Key: "brandenburg/video/wald_07.mp4",
+                audioS3Key: "brandenburg/audio/mall_02.aac",
+                videoS3Key: "brandenburg/video/mall_02.mp4",
+            },
+            {
+                id: 3,
+                audioS3Key: "brandenburg/audio/mall_03.aac",
+                videoS3Key: "brandenburg/video/mall_03.mp4",
+            },
+            {
+                id: 4,
+                audioS3Key: "brandenburg/audio/mall_04.aac",
+                videoS3Key: "brandenburg/video/mall_04.mp4",
+            },
+            {
+                id: 5,
+                audioS3Key: "brandenburg/audio/mall_05.aac",
+                videoS3Key: "brandenburg/video/mall_05.mp4",
             },
         ],
     },
@@ -96,8 +106,13 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/wald_07.mp3",
-                videoS3Key: "brandenburg/video/wald_07.mp4",
+                audioS3Key: "brandenburg/audio/city_01.mp3",
+                videoS3Key: "brandenburg/video/city_01.mp4",
+            },
+            {
+                id: 2,
+                audioS3Key: "brandenburg/audio/city_02.mp3",
+                videoS3Key: "brandenburg/video/city_02.mp4",
             },
         ],
     },
@@ -112,8 +127,28 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/wald_07.mp3",
-                videoS3Key: "brandenburg/video/wald_07.mp4",
+                audioS3Key: "brandenburg/audio/water_01.aac",
+                videoS3Key: "brandenburg/video/water_01.mp4",
+            },
+            {
+                id: 2,
+                audioS3Key: "brandenburg/audio/water_02.aac",
+                videoS3Key: "brandenburg/video/water_02.mp4",
+            },
+            {
+                id: 3,
+                audioS3Key: "brandenburg/audio/water_03.aac",
+                videoS3Key: "brandenburg/video/water_03.mp4",
+            },
+            {
+                id: 4,
+                audioS3Key: "brandenburg/audio/water_04.aac",
+                videoS3Key: "brandenburg/video/water_04.mp4",
+            },
+            {
+                id: 5,
+                audioS3Key: "brandenburg/audio/water_05.aac",
+                videoS3Key: "brandenburg/video/water_05.mp4",
             },
         ],
     },
@@ -128,8 +163,23 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/wald_07.mp3",
-                videoS3Key: "brandenburg/video/wald_07.mp4",
+                audioS3Key: "brandenburg/audio/tram_01.aac",
+            },
+            {
+                id: 2,
+                audioS3Key: "brandenburg/audio/tram_02.aac",
+            },
+            {
+                id: 3,
+                audioS3Key: "brandenburg/audio/tram_03.aac",
+            },
+            {
+                id: 4,
+                audioS3Key: "brandenburg/audio/tram_04.aac",
+            },
+            {
+                id: 5,
+                audioS3Key: "brandenburg/audio/tram_05.aac",
             },
         ],
     },
@@ -144,8 +194,28 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "mataro/audio/beach_01.aac",
+                videoS3Key: "mataro/video/beach_01.mp4",
+            },
+            {
+                id: 2,
+                audioS3Key: "mataro/audio/beach_02.aac",
+                videoS3Key: "mataro/video/beach_02.mp4",
+            },
+            {
+                id: 3,
+                audioS3Key: "mataro/audio/beach_03.aac",
+                videoS3Key: "mataro/video/beach_03.mp4",
+            },
+            {
+                id: 4,
+                audioS3Key: "mataro/audio/beach_04.aac",
+                videoS3Key: "mataro/video/beach_04.mp4",
+            },
+            {
+                id: 5,
+                audioS3Key: "mataro/audio/beach_05.aac",
+                videoS3Key: "mataro/video/beach_05.mp4",
             },
         ],
     },
@@ -160,8 +230,28 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "mataro/audio/water_01.aac",
+                videoS3Key: "mataro/video/water_01.mp4",
+            },
+            {
+                id: 2,
+                audioS3Key: "mataro/audio/water_02.aac",
+                videoS3Key: "mataro/video/water_02.mp4",
+            },
+            {
+                id: 3,
+                audioS3Key: "mataro/audio/water_03.aac",
+                videoS3Key: "mataro/video/water_03.mp4",
+            },
+            {
+                id: 4,
+                audioS3Key: "mataro/audio/water_04.aac",
+                videoS3Key: "mataro/video/water_04.mp4",
+            },
+            {
+                id: 5,
+                audioS3Key: "mataro/audio/water_05.aac",
+                videoS3Key: "mataro/video/water_05.mp4",
             },
         ],
     },
@@ -176,12 +266,32 @@ export const locationData: Location[] = [
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "mataro/audio/mall_01.aac",
+                videoS3Key: "mataro/video/mall_01.mp4",
+            },
+            {
+                id: 2,
+                audioS3Key: "mataro/audio/mall_02.aac",
+                videoS3Key: "mataro/video/mall_02.mp4",
+            },
+            {
+                id: 3,
+                audioS3Key: "mataro/audio/mall_03.aac",
+                videoS3Key: "mataro/video/mall_03.mp4",
+            },
+            {
+                id: 4,
+                audioS3Key: "mataro/audio/mall_04.aac",
+                videoS3Key: "mataro/video/mall_04.mp4",
+            },
+            {
+                id: 5,
+                audioS3Key: "mataro/audio/mall_05.aac",
+                videoS3Key: "mataro/video/mall_05.mp4",
             },
         ],
     },
-    {
+    /**{
         id: 9,
         name: "Tecno Campus",
         region: "Mataro",
@@ -196,7 +306,7 @@ export const locationData: Location[] = [
                 videoS3Key: "brandenburg/video/city_02.mp4",
             },
         ],
-    },
+    },**/
 ];
 export async function getRandomLocationWithMedia(): Promise<{
     location: Location;
@@ -237,7 +347,7 @@ export async function getRandomLocationWithMedia(): Promise<{
         //const audioData = await audioResponse.json();
         //const videoData = await videoResponse.json();
 
-        // Update the S3 bucket policy to allow public read access
+        // Update the S3 bucket policy to allow public read aacess
         // Then modify getRandomLocationWithMedia() to use direct URLs:
 
         mediaItem.audioUrl = `https://audiogame.fsn1.your-objectstorage.com/${mediaItem.audioS3Key}`;
