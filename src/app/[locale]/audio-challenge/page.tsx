@@ -32,7 +32,6 @@ export default function TimerPage() {
 
     const [feedback, setFeedback] = useState<string | null>(null);
     const [started, setStarted] = useState(false);
-    const [expiry, setExpiry] = useState<Date | null>(null);
     const [bonus, setBonus] = useState(false);
     const [timerHighlighted, setTimerHighlighted] = useState(false);
     const [timerPaused, setTimerPaused] = useState(false);
@@ -48,6 +47,7 @@ export default function TimerPage() {
     const [projection, setProjection] = useState<EquirectProjection | null>(
         null
     );
+    const [timerSeconds, setTimerSeconds] = useState(120);
 
     useEffect(() => {
         async function loadInitialChallenge() {
@@ -160,7 +160,6 @@ export default function TimerPage() {
         if (!started) {
             const time = new Date();
             time.setSeconds(time.getSeconds() + 120);
-            setExpiry(time);
             setStarted(true);
         }
     };
@@ -215,33 +214,24 @@ export default function TimerPage() {
             const newStreak = streak + 1;
             setStreak(newStreak);
 
-            // Check for streak milestones (5, 10, 15, etc.)
+            // Streak milestone/confetti logic...
             if (newStreak % 5 === 0) {
-                // Set milestone animation
                 setStreakMilestone(newStreak);
                 setShowStreakAnimation(true);
-                // Hide after animation completes
                 setTimeout(() => setShowStreakAnimation(false), 3000);
-                // Trigger confetti
                 triggerConfetti(newStreak);
             }
 
-            // Timer bonus logic remains the same
-            if (expiry) {
-                const bonusTime = hintUsed ? 10 : 20;
-                setBonus(true);
-                setTimerHighlighted(true);
-                setExpiry((prev) => {
-                    if (!prev) return null;
-                    const newTime = new Date(prev);
-                    newTime.setSeconds(newTime.getSeconds() + bonusTime);
-                    return newTime;
-                });
-                setTimeout(() => setBonus(false), 2000);
-                setTimeout(() => setTimerHighlighted(false), 1000);
-            }
+            // --- THIS IS THE IMPORTANT PART ---
+            // Add bonus time to timerSeconds instead of using expiry/Date
+            const bonusTime = hintUsed ? 10 : 20;
+            setBonus(true);
+            setTimerHighlighted(true);
+            setTimerSeconds((prev) => prev + bonusTime);
+            setTimeout(() => setBonus(false), 2000);
+            setTimeout(() => setTimerHighlighted(false), 1000);
+            // --- END IMPORTANT PART ---
         } else {
-            // Reset streak on wrong answer
             setStreak(0);
         }
     };
@@ -288,7 +278,6 @@ export default function TimerPage() {
         setGameState("playing");
         setFeedback(null);
         setStarted(false);
-        setExpiry(null);
         setBonus(false);
         setTimerHighlighted(false);
         setTimerPaused(false);
@@ -350,6 +339,18 @@ export default function TimerPage() {
     const couldNotLoadVideoText =
         t("couldNotLoadVideo") || "Could not load video";
 
+    useEffect(() => {
+        if (!started || timerPaused || gameState === "gameover") return;
+        if (timerSeconds <= 0) {
+            setGameState("gameover");
+            return;
+        }
+        const interval = setInterval(() => {
+            setTimerSeconds((s) => (s > 0 ? s - 1 : 0));
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [started, timerPaused, timerSeconds, gameState]);
+
     return (
         <div className="relative flex flex-col items-center min-h-screen bg-white">
             {/* Streak milestone animation */}
@@ -390,10 +391,7 @@ export default function TimerPage() {
                         }`}
                     >
                         <GameTimer
-                            key={expiry?.getTime() || "static"}
-                            expiryTimestamp={
-                                expiry || new Date(Date.now() + 120 * 1000)
-                            }
+                            seconds={timerSeconds}
                             onExpire={handleExpire}
                             isPaused={!started || timerPaused}
                         />
