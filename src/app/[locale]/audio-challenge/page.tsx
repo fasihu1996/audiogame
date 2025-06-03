@@ -467,9 +467,6 @@ export default function TimerPage() {
                         </div>
                     )}
                     <div className="relative z-10 bg-white overflow-hidden w-[90%] h-[90%] max-w-5xl">
-                        <h2 className="absolute top-2 left-1/2 transform -translate-x-1/2 z-50 bg-black bg-opacity-50 px-4 py-2 rounded text-white font-bold">
-                            {currentChallenge.location.name}
-                        </h2>
                         <button
                             onClick={handleCloseHint}
                             className="absolute top-2 right-2 z-50 bg-white rounded-full p-2 text-gray-800 hover:bg-gray-100 transition-colors"
