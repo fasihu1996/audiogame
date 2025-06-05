@@ -57,9 +57,7 @@ export default function LandingPage() {
             {/* Center Content */}
             <div className="z-10 text-center px-16 md:px-24 lg:px-32 text-black max-w-2xl mx-auto">
                 <h1 className="text-6xl font-bold mb-2 bg-gradient-to-r from-blue-600 via-[#c73e90] to-red-600 text-transparent bg-clip-text">
-                    AMBI
-                    <br />
-                    QUIZ
+                    AMBIQUIZ
                 </h1>
                 <h2 className="text-2xl mb-8">Brandenburg & Mataró</h2>
 
