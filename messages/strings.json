@@ -1,0 +1,132 @@
+{
+    "viewMap": {
+        "en": "View map",
+        "es": "Ver mapa",
+        "ca": "Veure mapa"
+    },
+    "startGame": {
+        "en": "Start game",
+        "es": "Empezar juego",
+        "ca": "Començar joc"
+    },
+    "about": {
+        "en": "About Us",
+        "es": "Sobre nosotros",
+        "ca": "Sobre nosaltres"
+    },
+    "whatIsTitle": {
+        "en": "IMC Project",
+        "es": "Proyecto IMC",
+        "ca": "Projecte IMC"
+    },
+    "whatIsDescription": {
+        "en": "Discover cities through sound",
+        "es": "Descubre ciudades a través del sonido",
+        "ca": "Descobreix ciutats a través del so"
+    },
+    "backToHome": {
+        "en": "Back to Home",
+        "es": "Volver al inicio",
+        "ca": "Tornar a l'inici"
+    },
+    "chooseMode": {
+        "en": "Choose game mode",
+        "es": "Elegir modo de juego",
+        "ca": "Escollir mode de joc"
+    },
+    "timer": {
+        "en": "Timer",
+        "es": "Temporizador",
+        "ca": "Temporitzador"
+    },
+    "correct": {
+        "en": "Correct!",
+        "es": "¡Correcto!",
+        "ca": "Correcte!"
+    },
+    "welcome": {
+        "en": "Welcome",
+        "es": "Bienvenido",
+        "ca": "Benvingut"
+    },
+    "pause": {
+        "en": "Pause",
+        "es": "Pausa",
+        "ca": "Pausa"
+    },
+    "play": {
+        "en": "Play",
+        "es": "Reproducir",
+        "ca": "Reproduir"
+    },
+    "restart": {
+        "en": "Restart",
+        "es": "Reiniciar",
+        "ca": "Reiniciar"
+    },
+    "wrong": {
+        "en": "Wrong!",
+        "es": "¡Incorrecto!",
+        "ca": "Incorrecte!"
+    },
+    "hintRevealed": {
+        "en": "Hint revealed!",
+        "es": "¡Pista revelada!",
+        "ca": "Pista revelada!"
+    },
+    "hintIn": {
+        "en": "Hint in",
+        "es": "Pista en",
+        "ca": "Pista en"
+    },
+    "volume": {
+        "en": "Volume",
+        "es": "Volumen",
+        "ca": "Volum"
+    },
+    "next": {
+        "en": "Next",
+        "es": "Siguiente",
+        "ca": "Següent"
+    },
+    "gameOver": {
+        "en": "Game over!",
+        "es": "¡Juego terminado!",
+        "ca": "Joc acabat!"
+    },
+    "hintReducesBonus": {
+        "en": "Hint reduces time bonus",
+        "es": "La pista reduce el bono de tiempo",
+        "ca": "La pista redueix el bonus de temps"
+    },
+    "showHint": {
+        "en": "Show hint",
+        "es": "Mostrar pista",
+        "ca": "Mostrar pista"
+    },
+    "viewHint": {
+        "en": "View hint",
+        "es": "Mostrar pista",
+        "ca": "Veure pista"
+    },
+    "loadingVideo": {
+        "en": "Loading video",
+        "es": "Cargando vídeo",
+        "ca": "Carregant vídeo"
+    },
+    "couldNotLoadVideo": {
+        "en": "Video could not be loaded",
+        "es": "No se pudo cargar el vídeo",
+        "ca": "No s'ha pogut carregar el vídeo"
+    },
+    "streak": {
+        "en": "Streak",
+        "es": "Racha",
+        "ca": "Ratge"
+    },
+    "switchTo": {
+        "en": "Switch to Brandenburg",
+        "es": "Cambiar a Brandenburg",
+        "ca": "Canviar a Brandenburg"
+    }
+}

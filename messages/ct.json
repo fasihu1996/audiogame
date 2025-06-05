@@ -1,54 +1,53 @@
 {
     "HomePage": {
-        "viewMap": "Catalan view map",
-        "startGame": "Start game cat",
-        "about": "About Us cat"
+        "viewMap": "Veure mapa",
+        "startGame": "Començar joc",
+        "about": "Sobre nosaltres"
     },
     "AboutPage": {
-        "aboutTitle": "About Us cat",
-        "whatIsTitle": "IMC Project cat",
-        "whatIsDescription": "Short project description cat",
-        "brandenburgDescription": "Description about Brandenburg cat",
-        "mataroDescription": "Description about Mataró cat",
-        "backToHome": "Back to Home cat",
-        "chooseMode": "CHOOSE GAME MODE cat",
-        "lives": "Lives cat",
-        "rounds": "Rounds cat",
-        "timer": "Timer cat"
+        "aboutTitle": "Sobre nosaltres",
+        "whatIsTitle": "Projecte IMC",
+        "whatIsDescription": "Descobreix ciutats a través del so",
+        "brandenburgDescription": "Descripción de Brandenburg",
+        "mataroDescription": "Descripción de Mataró",
+        "backToHome": "Tornar a l'inici"
     },
     "AudioChallenge": {
-        "correct!": "Correct! cat",
-        "welcome": "Welcome cat",
-        "pause": "Pause cat",
-        "play": "Play cat",
-        "restart": "Restart cat",
-        "wrong!": "Wrong! cat",
-        "hint revealed!": "Hint revealed! cat",
-        "hint in": "Hint in cat",
-        "volume": "Volume cat",
-        "next": "Next cat",
-        "gameOver": "Game over cat",
-        "showHint": "Show hint cat",
-        "viewHint": "View hint cat",
-        "hintReducesBonus": "Hint reduces bonus cat",
-        "loadingVideo": "Loading video cat",
-        "couldNotLoadVideo": "Could not load video cat",
-        "streak": "Streak"
+        "correct!": "Correcte!",
+        "welcome": "Benvingut",
+        "pause": "Pausa",
+        "play": "Reproduir",
+        "wrong!": "Incorrecte!",
+        "hint revealed!": "Pista revelada!",
+        "hint in": "Pista en",
+        "volume": "Volum",
+        "next": "Següent",
+        "chooseMode": "Escollir mode de joc",
+        "timer": "Temporitzador",
+        "restart": "Reiniciar",
+        "hintRevealed": "Pista revelada!",
+        "hintIn": "Pista en",
+        "hintReducesBonus": "La pista redueix el bonus de temps",
+        "showHint": "Mostrar pista",
+        "viewHint": "Veure pista",
+        "loadingVideo": "Carregant vídeo",
+        "couldNotLoadVideo": "No s'ha pogut carregar el vídeo",
+        "streak": "Ratge"
     },
     "MapPage": {
-        "backToHome": "Back To Home cat",
-        "switchTo": "Switch to "
+        "backToHome": "Tornar a l'inici",
+        "switchTo": "Canviar a "
     },
     "LocationPage": {
-        "play": "Play cat",
-        "pause": "Pause cat",
-        "volume": "Volume cat",
-        "backToMap": "Back to Map cat"
+        "play": "Reproduir",
+        "pause": "Pausa",
+        "volume": "Volum",
+        "backToMap": "Tornar a la mapa"
     },
     "GameMenu": {
-        "chooseMode": "CHOOSE GAME MODE cat",
-        "lives": "Lives cat",
-        "rounds": "Rounds cat",
-        "timer": "Timer cat"
+        "chooseMode": "CHOOSE GAME MODE",
+        "lives": "Lives",
+        "rounds": "Rounds",
+        "timer": "Timer"
     }
 }

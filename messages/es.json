@@ -1,41 +1,51 @@
 {
     "HomePage": {
-        "viewMap": "Mirar mapa",
-        "startGame": "Comenzar jugar",
-        "about": "Acerca de nosotros"
+        "viewMap": "Ver mapa",
+        "startGame": "Empezar juego",
+        "about": "Sobre nosotros"
     },
     "AboutPage": {
-        "aboutTitle": "Sobre nosotras",
-        "whatIsTitle": "IMC Proyecto",
-        "whatIsDescription": "Breve descripción del proyecto",
+        "aboutTitle": "Sobre nosotros",
+        "whatIsTitle": "Proyecto IMC",
+        "whatIsDescription": "Descubre ciudades a través del sonido",
         "brandenburgDescription": "Descripción de Brandenburg",
         "mataroDescription": "Descripción de Mataró",
-        "backToHome": "Volver a la página de inicio"
+        "backToHome": "Volver al inicio"
     },
     "AudioChallenge": {
-        "correct!": "Correcto!",
+        "correct!": "¡Correcto!",
         "welcome": "Bienvenido",
         "pause": "Pausa",
-        "play": "Poner",
+        "play": "Reproducir",
         "wrong!": "Equivocado!",
         "hint revealed!": "Indicación revelado!",
         "hint in": "Indicación en",
         "volume": "Volumen",
-        "next": "Próximo",
+        "next": "Siguiente",
         "chooseMode": "CHOOSE GAME MODE",
         "lives": "Lives",
         "rounds": "Rounds",
-        "timer": "Timer"
+        "timer": "Timer",
+        "restart": "Reiniciar",
+        "wrong": "¡Incorrecto!",
+        "hintRevealed": "¡Pista revelada!",
+        "hintIn": "Pista en",
+        "hintReducesBonus": "La pista reduce el bono de tiempo",
+        "showHint": "Mostrar pista",
+        "viewHint": "Mostrar pista",
+        "loadingVideo": "Cargando vídeo",
+        "couldNotLoadVideo": "No se pudo cargar el vídeo",
+        "streak": "Racha"
     },
     "MapPage": {
-        "backToHome": "Returnar",
-        "switchTo": "En "
+        "backToHome": "Volver al inicio",
+        "switchTo": "Cambiar a "
     },
     "LocationPage": {
-        "play": "Incicar",
+        "play": "Reproducir",
         "pause": "Pausa",
         "volume": "Volumen",
-        "backToMap": "Vuelta a mapa"
+        "backToMap": "Volver a mapa"
     },
     "GameMenu": {
         "chooseMode": "CHOOSE GAME MODE",
