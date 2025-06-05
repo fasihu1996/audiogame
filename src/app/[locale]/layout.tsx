@@ -14,7 +14,7 @@ const spaceGroteskSans = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-    title: "Audioguessr",
+    title: "Ambiquiz",
     description: "Guess which city the audio is from?",
 };
 
