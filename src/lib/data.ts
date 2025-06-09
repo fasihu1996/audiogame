@@ -332,13 +332,23 @@ export async function getRandomLocationWithMedia(): Promise<{
     location: Location;
     mediaItem: MediaItem;
 }> {
-    // Get a random location
-    const locationIndex = Math.floor(Math.random() * locationData.length);
-    const location = locationData[locationIndex];
+    // Create a flat array of all media items with their location info
+    // This ensures equal probability for every media item regardless of location size
+    const allMediaItems: Array<{ location: Location; mediaItem: MediaItem }> =
+        [];
 
-    // Get a random media item from this location
-    const mediaIndex = Math.floor(Math.random() * location.media.length);
-    const mediaItem = { ...location.media[mediaIndex] };
+    for (const location of locationData) {
+        for (const media of location.media) {
+            allMediaItems.push({
+                location,
+                mediaItem: { ...media },
+            });
+        }
+    }
+
+    // Select a random item from the flattened array
+    const randomIndex = Math.floor(Math.random() * allMediaItems.length);
+    const { location, mediaItem } = allMediaItems[randomIndex];
 
     try {
         // Generate signed URLs from the API endpoint
