@@ -1,6 +1,9 @@
 // Define location types for Brandenburg and Mataro
 type Region = "Brandenburg" | "Mataro";
 
+// Configuration: Set to true to use local files from public folder, false to use S3 API
+const USE_LOCAL_FILES = false;
+
 // Define a media item structure
 interface MediaItem {
     id: number;
@@ -344,11 +347,19 @@ export async function getRandomLocationWithMedia(): Promise<{
                 mediaItem: { ...media },
             });
         }
-    }
-
-    // Select a random item from the flattened array
+    } // Select a random item from the flattened array
     const randomIndex = Math.floor(Math.random() * allMediaItems.length);
     const { location, mediaItem } = allMediaItems[randomIndex];
+
+    // Check if we should use local files instead of S3 API
+    if (USE_LOCAL_FILES) {
+        // Use local files from public folder
+        mediaItem.audioUrl = `/${mediaItem.audioS3Key}`;
+        if (mediaItem.videoS3Key) {
+            mediaItem.videoUrl = `/${mediaItem.videoS3Key}`;
+        }
+        return { location, mediaItem };
+    }
 
     try {
         // Generate signed URLs from the API endpoint
