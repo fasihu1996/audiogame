@@ -353,7 +353,6 @@ export async function getRandomLocationWithMedia(): Promise<{
     try {
         // Generate signed URLs from the API endpoint
         const audioResponse = await fetch("/api/s3/url", {
-            // Note the correct path
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -361,32 +360,42 @@ export async function getRandomLocationWithMedia(): Promise<{
             body: JSON.stringify({ key: mediaItem.audioS3Key }),
         });
 
-        const videoResponse = await fetch("/api/s3/url", {
-            // Note the correct path
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ key: mediaItem.videoS3Key }),
-        });
+        let videoResponse: Response;
+        if (mediaItem.videoS3Key) {
+            videoResponse = await fetch("/api/s3/url", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ key: mediaItem.videoS3Key }),
+            });
+        }
 
-        if (!audioResponse.ok || !videoResponse.ok) {
+        if (
+            !audioResponse.ok ||
+            (mediaItem.videoS3Key && videoResponse && !videoResponse.ok)
+        ) {
             throw new Error("Failed to fetch signed URLs");
         }
 
-        //const audioData = await audioResponse.json();
-        //const videoData = await videoResponse.json();
+        const audioData = await audioResponse.json();
+        const videoData =
+            mediaItem.videoS3Key && videoResponse
+                ? await videoResponse.json()
+                : null;
 
-        // Update the S3 bucket policy to allow public read aacess
-        // Then modify getRandomLocationWithMedia() to use direct URLs:
-
-        mediaItem.audioUrl = `https://audiogame.fsn1.your-objectstorage.com/${mediaItem.audioS3Key}`;
-        mediaItem.videoUrl = `https://audiogame.fsn1.your-objectstorage.com/${mediaItem.videoS3Key}`;
+        // Use the signed URLs from the API
+        mediaItem.audioUrl = audioData.url;
+        if (videoData) {
+            mediaItem.videoUrl = videoData.url;
+        }
     } catch (error) {
         console.error("Error generating signed URLs:", error);
-        // Fallback to local paths if API fails - Fix the path here too
-        mediaItem.audioUrl = `/${mediaItem.audioS3Key}`; // Removed '/public'
-        mediaItem.videoUrl = `/${mediaItem.videoS3Key}`; // Removed '/public'
+        // Fallback to local paths if API fails
+        mediaItem.audioUrl = `/${mediaItem.audioS3Key}`;
+        if (mediaItem.videoS3Key) {
+            mediaItem.videoUrl = `/${mediaItem.videoS3Key}`;
+        }
     }
 
     return { location, mediaItem };
