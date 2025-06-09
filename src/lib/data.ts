@@ -221,7 +221,7 @@ export const locationData: Location[] = [
     },
     {
         id: 7,
-        name: "Forest",
+        name: "Waterfall",
         region: "Mataro",
         coordinates: {
             lat: 41.58409,
@@ -291,22 +291,42 @@ export const locationData: Location[] = [
             },
         ],
     },
-    /**{
+    {
         id: 9,
-        name: "Tecno Campus",
+        name: "Forest",
         region: "Mataro",
         coordinates: {
-            lat: 41.527927,
-            lng: 2.434416,
+            lat: 41.582823,
+            lng: 2.435417,
         },
         media: [
             {
                 id: 1,
-                audioS3Key: "brandenburg/audio/city_02.mp3",
-                videoS3Key: "brandenburg/video/city_02.mp4",
+                audioS3Key: "mataro/audio/forest_01.aac",
+                videoS3Key: "mataro/video/forest_01.mp4",
+            },
+            {
+                id: 2,
+                audioS3Key: "mataro/audio/forest_02.aac",
+                videoS3Key: "mataro/video/forest_02.mp4",
+            },
+            {
+                id: 3,
+                audioS3Key: "mataro/audio/forest_03.aac",
+                videoS3Key: "mataro/video/forest_03.mp4",
+            },
+            {
+                id: 4,
+                audioS3Key: "mataro/audio/forest_04.aac",
+                videoS3Key: "mataro/video/forest_04.mp4",
+            },
+            {
+                id: 5,
+                audioS3Key: "mataro/audio/forest_05.aac",
+                videoS3Key: "mataro/video/forest_05.mp4",
             },
         ],
-    },**/
+    },
 ];
 export async function getRandomLocationWithMedia(): Promise<{
     location: Location;
