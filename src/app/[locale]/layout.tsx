@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -16,6 +16,11 @@ const spaceGroteskSans = Space_Grotesk({
 export const metadata: Metadata = {
     title: "Ambiquiz",
     description: "Guess which city the audio is from?",
+};
+
+export const viewport: Viewport = {
+    initialScale: 1,
+    width: "device-width",
 };
 
 export default async function LocaleLayout({
@@ -39,6 +44,7 @@ export default async function LocaleLayout({
     }
     return (
         <html lang={locale}>
+            <head></head>
             <body className={`${spaceGroteskSans.variable} antialiased`}>
                 <NextIntlClientProvider locale={locale} messages={messages}>
                     {children}
