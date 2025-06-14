@@ -20,6 +20,15 @@ body {
     color: var(--foreground);
 }
 
+html,
+body {
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
 .btn-primary {
     @apply bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)] text-white transition-colors rounded-full;
 }
@@ -78,6 +87,32 @@ body {
     .round-container {
         width: 1500px;
         height: 1500px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    /* for screens smaller then 420px, set the font size smaller */
+    h1 {
+        font-size: 200%;
+    }
+    h2 {
+        font-size: 80%;
+    }
+    .btn-primary {
+        @apply text-sm py-1.5 px-3;
+    }
+}
+
+@media screen and (max-width: 290px) {
+    /* for screens smaller then 420px, set the font size smaller */
+    h1 {
+        font-size: 150%;
+    }
+    h2 {
+        font-size: 60%;
+    }
+    .btn-primary {
+        @apply text-xs py-1 px-2;
     }
 }
 

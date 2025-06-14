@@ -122,7 +122,7 @@ const AudioChallengeCore = forwardRef<
                 <div className="w-full flex flex-col items-center">
                     <>
                         {isAudioLoading && (
-                            <div className="w-[320px] h-[60px] bg-gray-200 rounded-md animate-pulse mb-6" />
+                            <div className="w-full max-w-xs h-[60px] bg-gray-200 rounded-md animate-pulse mb-6" />
                         )}
                         <div className={isAudioLoading ? "hidden" : "block"}>
                             <WavesurferPlayer

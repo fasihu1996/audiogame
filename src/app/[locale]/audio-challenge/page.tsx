@@ -401,7 +401,7 @@ export default function TimerPage() {
 
             {/* Main game content */}
             <div className="relative flex flex-col items-center justify-center min-h-screen pt-[10vh] text-black z-10">
-                <div className="bg-white p-0 w-full max-w-[320px] mx-auto mt-50">
+                <div className="bg-white p-0 w-full max-w-full mx-auto mt-50">
                     <AudioChallengeCore
                         ref={audioComponentRef}
                         audioUrl={currentChallenge.mediaItem.audioUrl}
