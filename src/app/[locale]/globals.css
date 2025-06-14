@@ -20,6 +20,15 @@ body {
     color: var(--foreground);
 }
 
+html,
+body {
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
 .btn-primary {
     @apply bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)] text-white transition-colors rounded-full;
 }
