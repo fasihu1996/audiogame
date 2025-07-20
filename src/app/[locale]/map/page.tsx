@@ -10,7 +10,7 @@ function MapPage() {
     const t = useTranslations("MapPage");
     const searchParams = useSearchParams();
 
-    const mataro = { lat: 41.5381, lon: 2.4445, name: "Mataró" };
+    const mataro = { lat: 41.555, lon: 2.4445, name: "Mataró" };
     const brandenburg = { lat: 52.4106, lon: 12.5445, name: "Brandenburg" };
 
     // Initialize city based on URL parameter
@@ -27,7 +27,7 @@ function MapPage() {
             <FlatMap
                 lat={city.lat}
                 lon={city.lon}
-                zoom={16}
+                zoom={14}
                 isFullPage={true}
                 currentRegion={city.name}
             />

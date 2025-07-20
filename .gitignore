@@ -3,6 +3,7 @@
 # local asset files
 /public/brandenburg
 /public/mataro
+._*
 
 # dependencies
 /node_modules
