@@ -1,4 +1,5 @@
-This is a project created for the course "International Media Camp" as a cooperation between students of the Spanish Tecnocampus Mataro and German Technische Hochschule Brandenburg.
+This is a project created for the course "International Media Camp" as a cooperation between students of the Spanish Tecnocampus Mataro and German Technische Hochschule Brandenburg, specifically [Johanna](https://github.com/johanna1105),
+[Dilara](https://github.com/sarasate33) and [Fasih](https://github.com/fasihu1996).
 
 ## Project purpose
 The project contains short audio and video recording made with a 360° camera to create immersive experiences of the two cities Mataró and Brandenburg. These can either be explored through a map functionality or through an interactive guessing game.
