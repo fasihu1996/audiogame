@@ -21,7 +21,7 @@ export default function LandingPage() {
             {/* Left circle map (Brandenburg) */}
             <div
                 className="absolute map-circle-left cursor-pointer"
-                onClick={() => handleMapClick("mataro")}
+                onClick={() => handleMapClick("brandenburg")}
             >
                 <div className="round-container border border-gray-200 shadow-lg">
                     <div className="map-container">
