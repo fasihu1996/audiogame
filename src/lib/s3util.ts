@@ -1,11 +1,13 @@
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
-// Initialize the S3 client with your provider's credentials
 const s3Client = new S3Client({
-    region: "eu-central",
+    // Must match `s3_region` in garage.toml, otherwise Garage rejects the signature
+    region: process.env.S3_REGION,
     endpoint: process.env.S3_ENDPOINT || "",
     forcePathStyle: true,
+    requestChecksumCalculation: "WHEN_REQUIRED",
+    responseChecksumValidation: "WHEN_REQUIRED",
     credentials: {
         accessKeyId: process.env.S3_ACCESS_KEY || "",
         secretAccessKey: process.env.S3_API_KEY || "",
@@ -23,7 +25,7 @@ const BUCKET_NAME = process.env.S3_BUCKET;
  */
 export async function getSignedS3Url(
     key: string,
-    expiresIn = 3600
+    expiresIn = 3600,
 ): Promise<string> {
     try {
         const command = new GetObjectCommand({
@@ -47,9 +49,8 @@ export async function getSignedS3Url(
  */
 export function mapLocalPathToS3Key(localPath: string): string {
     // Remove leading slash if present
-    const cleanPath = localPath.startsWith("/")
-        ? localPath.substring(1)
-        : localPath;
+    const cleanPath =
+        localPath.startsWith("/") ? localPath.substring(1) : localPath;
 
     return cleanPath;
 }
